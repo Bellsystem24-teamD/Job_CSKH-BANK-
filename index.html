@@ -1,555 +1,675 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tuyển Dụng Bellsystem24 Vietnam</title>
+    <title>BellSystem24 Vietnam - Tuyển Dụng</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body { font-family: 'Be Vietnam Pro', sans-serif; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+    <!-- Google Fonts: Plus Jakarta Sans (Modern & Clean) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0F172A', // Dark Navy
+                            blue: '#3B82F6', // Bright Blue
+                            orange: '#F97316', // Call to Action Orange
+                            light: '#F8FAFC', // Background
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.5)',
+                    }
+                }
+            }
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
-        .animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Image Hover Zoom */
+        .img-zoom-container { overflow: hidden; }
+        .img-zoom { transition: transform 0.5s ease; }
+        .group:hover .img-zoom { transform: scale(1.1); }
+
+        /* Loader */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3B82F6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-500 selection:text-white">
-    <div id="root"></div>
+<body class="bg-brand-light text-slate-800 antialiased relative">
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <!-- Navbar (Sticky & Glass) -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass shadow-sm top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-brand-navy rounded-lg flex items-center justify-center text-white font-bold text-xl">B</div>
+                    <div>
+                        <h1 class="font-bold text-xl tracking-tight text-brand-navy">BellSystem24</h1>
+                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Vietnam</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-slate-600 hover:text-brand-blue font-medium transition">Về chúng tôi</a>
+                    <a href="#featured" class="text-slate-600 hover:text-brand-blue font-medium transition">Nổi bật</a>
+                    <a href="#jobs" class="text-slate-600 hover:text-brand-blue font-medium transition">Việc làm</a>
+                    <a href="#contact" class="text-slate-600 hover:text-brand-blue font-medium transition">Liên hệ</a>
+                    <a href="#jobs" class="bg-brand-navy text-white px-5 py-2.5 rounded-full font-semibold hover:bg-brand-blue transition shadow-lg hover:shadow-glow transform hover:-translate-y-0.5">
+                        Tìm việc ngay
+                    </a>
+                </div>
 
-        // --- ICONS (Inline SVG components to replace Lucide imports) ---
-        const IconMapPin = ({ size=18, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
-        const IconDollar = ({ size=18, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
-        const IconClock = ({ size=18, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
-        const IconBriefcase = ({ size=18, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>;
-        const IconCheck = ({ size=18, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>;
-        const IconX = ({ size=24, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 18 18"/></svg>;
-        const IconSearch = ({ size=20, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>;
-        const IconStar = ({ size=14, className, fill="none" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
-        const IconArrowRight = ({ size=16, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
-        const IconMenu = ({ size=24, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>;
-        const IconPhone = ({ size=16, className }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-slate-600 hover:text-brand-navy focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-        // --- DATA ---
-        const JOBS_DATA = [
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto" data-aos="fade-up">
+                <div class="inline-block px-4 py-1.5 bg-blue-50 text-brand-blue font-semibold rounded-full text-sm mb-6 border border-blue-100">
+                    🚀 Tuyển dụng mới nhất 2024
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-brand-navy leading-tight mb-6">
+                    Đánh Thức Tiềm Năng <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-navy">Sự Nghiệp Của Bạn</span>
+                </h1>
+                <p class="text-lg text-slate-500 mb-8 leading-relaxed">
+                    Gia nhập BellSystem24 - Đối tác cung cấp giải pháp Contact Center hàng đầu. Làm việc với các ngân hàng lớn như MB, BIDV, UOB, TPBank.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#jobs" class="px-8 py-4 bg-brand-orange text-white font-bold rounded-full shadow-lg shadow-orange-200 hover:shadow-orange-300 hover:bg-orange-600 transition transform hover:-translate-y-1">
+                        Xem 10+ Việc Làm
+                    </a>
+                    <a href="#" class="px-8 py-4 bg-white text-slate-700 font-bold rounded-full shadow-md border border-slate-100 hover:bg-slate-50 transition">
+                        <i class="fas fa-play-circle mr-2 text-brand-blue"></i> Môi trường làm việc
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 border-t border-slate-200 pt-10" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold text-brand-navy">3000+</h3>
+                    <p class="text-sm text-slate-500">Nhân sự tài năng</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold text-brand-navy">10+</h3>
+                    <p class="text-sm text-slate-500">Đối tác ngân hàng</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold text-brand-navy">24/7</h3>
+                    <p class="text-sm text-slate-500">Hoạt động liên tục</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold text-brand-navy">TOP 1</h3>
+                    <p class="text-sm text-slate-500">Thị phần BPO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section (High Priority Jobs) -->
+    <section id="featured" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold text-brand-navy">Công Việc Nổi Bật 🔥</h2>
+                    <p class="text-slate-500 mt-2">Được ứng tuyển nhiều nhất tuần này</p>
+                </div>
+                <div class="hidden sm:flex gap-2">
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-brand-blue hover:text-white transition"><i class="fas fa-arrow-left"></i></button>
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-brand-blue hover:text-white transition"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="featured-container">
+                <!-- Featured Items Injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Jobs Section with Smart Filter -->
+    <section id="jobs" class="py-20 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-brand-navy">Tìm Kiếm Cơ Hội Của Bạn</h2>
+                <p class="text-slate-500 mt-2">Lọc theo nhu cầu để tìm công việc phù hợp nhất</p>
+            </div>
+
+            <!-- Smart Filter Bar -->
+            <div class="bg-white rounded-2xl shadow-soft p-4 mb-10 sticky top-24 z-30 border border-slate-100" data-aos="fade-down">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="searchInput" placeholder="Tìm vị trí, kỹ năng..." class="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue border-none text-slate-700 font-medium">
+                    </div>
+                    <div class="relative">
+                        <i class="fas fa-briefcase absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <select id="typeFilter" class="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue border-none text-slate-700 font-medium appearance-none cursor-pointer">
+                            <option value="All">Tất cả hình thức</option>
+                            <option value="Full-time">Toàn thời gian</option>
+                            <option value="Part-time">Bán thời gian</option>
+                            <option value="Internship">Thực tập sinh</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                    </div>
+                    <div class="relative">
+                        <i class="fas fa-building absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <select id="bankFilter" class="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue border-none text-slate-700 font-medium appearance-none cursor-pointer">
+                            <option value="All">Tất cả ngân hàng</option>
+                            <option value="UOB">UOB Bank</option>
+                            <option value="MB">MB Bank</option>
+                            <option value="TPBank">TP Bank</option>
+                            <option value="BIDV">BIDV</option>
+                            <option value="LPBank">LP Bank</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                    </div>
+                    <div>
+                        <button onclick="resetFilters()" class="w-full py-3 bg-slate-100 text-slate-600 rounded-xl font-semibold hover:bg-slate-200 transition flex items-center justify-center gap-2">
+                            <i class="fas fa-sync-alt"></i> Làm mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Grid -->
+            <div id="jobs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Job Cards Injected by JS -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-20">
+                <div class="inline-block p-6 rounded-full bg-slate-100 mb-4">
+                    <i class="fas fa-search text-4xl text-slate-400"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-700">Không tìm thấy công việc nào</h3>
+                <p class="text-slate-500">Hãy thử thay đổi từ khóa hoặc bộ lọc của bạn</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-brand-navy text-white overflow-hidden relative">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Tại sao chọn BellSystem24?</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-brand-blue/20 flex items-center justify-center mt-1 mr-4 text-brand-blue">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Lộ trình thăng tiến rõ ràng</h4>
+                                <p class="text-slate-300 text-sm">Cơ hội trở thành Team Leader, Supervisor chỉ sau 6 tháng - 1 năm làm việc.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-brand-orange/20 flex items-center justify-center mt-1 mr-4 text-brand-orange">
+                                <i class="fas fa-coins text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Thu nhập không giới hạn</h4>
+                                <p class="text-slate-300 text-sm">Lương cứng cạnh tranh + Hoa hồng hấp dẫn theo năng lực. Thưởng nóng hàng tuần.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mt-1 mr-4 text-green-400">
+                                <i class="fas fa-graduation-cap text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Đào tạo chuyên nghiệp</h4>
+                                <p class="text-slate-300 text-sm">Được đào tạo bài bản từ A-Z (có hỗ trợ chi phí) về nghiệp vụ ngân hàng và kỹ năng mềm.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative" data-aos="fade-left">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl relative">
+                        <i class="fas fa-quote-left text-4xl text-brand-blue opacity-50 absolute top-4 left-4"></i>
+                        <p class="text-lg italic text-slate-200 mb-6 pt-6">"Làm việc tại BellSystem24 giúp tôi rèn luyện sự kiên nhẫn và kỹ năng giao tiếp tuyệt vời. Môi trường năng động và sếp rất tâm lý."</p>
+                        <div class="flex items-center">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Employee" class="w-12 h-12 rounded-full border-2 border-brand-blue mr-3">
+                            <div>
+                                <p class="font-bold">Nguyễn Thu Hà</p>
+                                <p class="text-xs text-brand-blue uppercase">Team Leader - Dự án MB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">BellSystem24 Vietnam</h3>
+                    <p class="text-sm mb-4">Đơn vị cung cấp giải pháp Contact Center số 1 Việt Nam. Đồng hành cùng sự phát triển của bạn.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-brand-blue transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-brand-blue transition"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-brand-blue transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Liên kết</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-blue transition">Trang chủ</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition">Việc làm</a></li>
+                        <li><a href="#" class="hover:text-brand-blue transition">Quy trình ứng tuyển</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Liên hệ</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-map-marker-alt w-5"></i> Hà Nội & TP.HCM</li>
+                        <li><i class="fas fa-phone w-5"></i> (024) 3333 8888</li>
+                        <li><i class="fas fa-envelope w-5"></i> tuyendung@bell24.vn</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Đăng ký nhận tin</h4>
+                    <div class="flex">
+                        <input type="email" placeholder="Email của bạn" class="bg-slate-800 border-none rounded-l-lg px-4 py-2 w-full focus:ring-1 focus:ring-brand-blue">
+                        <button class="bg-brand-blue text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-10 pt-6 text-center text-xs">
+                &copy; 2024 BellSystem24 Vietnam. Designed for Excellence.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JOB DETAIL MODAL (Hidden by default) -->
+    <div id="jobModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="modalOverlay"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-3xl opacity-0 translate-y-4 scale-95" id="modalContent">
+                    
+                    <!-- Close Button -->
+                    <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-red-100 hover:text-red-500 transition">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                    <!-- Modal Header with Cover Image -->
+                    <div class="relative h-48 bg-slate-200 overflow-hidden">
+                        <img id="modalImage" src="" alt="Job Cover" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-6 text-white">
+                            <span id="modalBankBadge" class="px-2 py-1 bg-white/20 backdrop-blur-md rounded text-xs font-semibold uppercase mb-2 inline-block">Bank</span>
+                            <h3 id="modalTitle" class="text-2xl font-bold leading-tight">Job Title</h3>
+                        </div>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="px-6 py-6 sm:px-8 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                        <div class="flex flex-wrap gap-4 mb-6 text-sm text-slate-600 border-b border-slate-100 pb-4">
+                            <div class="flex items-center"><i class="fas fa-dollar-sign text-brand-orange w-5"></i> <span id="modalSalary" class="font-bold text-slate-800">Salary</span></div>
+                            <div class="flex items-center"><i class="fas fa-map-marker-alt text-brand-blue w-5"></i> <span id="modalLocation">Location</span></div>
+                            <div class="flex items-center"><i class="fas fa-clock text-green-500 w-5"></i> <span id="modalType">Type</span></div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-navy mb-2 border-l-4 border-brand-blue pl-3">Mô tả công việc</h4>
+                                <div id="modalDesc" class="text-slate-600 leading-relaxed text-sm whitespace-pre-line"></div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                <h4 class="text-lg font-bold text-brand-navy mb-2 border-l-4 border-brand-orange pl-3">Quyền lợi</h4>
+                                <div id="modalBenefits" class="text-slate-700 leading-relaxed text-sm whitespace-pre-line font-medium"></div>
+                            </div>
+
+                             <div>
+                                <h4 class="text-lg font-bold text-brand-navy mb-2 border-l-4 border-purple-500 pl-3">Yêu cầu</h4>
+                                <div id="modalRequirements" class="text-slate-600 leading-relaxed text-sm whitespace-pre-line"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="bg-slate-50 px-6 py-4 sm:flex sm:flex-row-reverse sm:px-8 border-t border-slate-100">
+                        <a id="modalApplyBtn" href="#" target="_blank" class="inline-flex w-full justify-center rounded-xl bg-brand-orange px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-orange-600 hover:shadow-orange-200 transition sm:ml-3 sm:w-auto">
+                            Ứng tuyển ngay <i class="fas fa-arrow-right ml-2 mt-0.5"></i>
+                        </a>
+                        <button onclick="closeModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 sm:mt-0 sm:w-auto">
+                            Đóng lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Init AOS Animation
+        AOS.init({
+            once: true,
+            offset: 100,
+            duration: 800,
+        });
+
+        // Job Data (Consolidated from User Uploads)
+        const jobs = [
             {
-                id: 'uob',
-                bankName: 'UOB Bank ',
-                title: 'Chuyên Viên Tư Vấn Thẻ Tín Dụng',
-                type: 'Full-time',
-                salary: '15 - 30 Triệu',
-                location: '1A Vũ Phạm Hàm, Cầu Giấy',
-                image: 'https://i.ex-cdn.com/theinvestor.vn/files/content/2023/05/11/uob_pic-1-1501.jpg',
-                logoBg: 'bg-blue-900',
-                tags: ['Hot', 'Lương cao'],
-                description: [
-                    'Thực hiện cuộc gọi ra tư vấn sản phẩm thẻ tín dụng, khoản vay UOB.',
-                    'Data khách hàng tiềm năng được cung cấp sẵn (không phải tự kiếm).',
-                    'Tư vấn các chương trình khuyến mãi, ưu đãi độc quyền của UOB.'
-                ],
-                benefits: [
-                    'Thu nhập không giới hạn: Lương cứng + Hoa hồng cao.',
-                    'Training nghiệp vụ ngân hàng chuẩn quốc tế (có hỗ trợ phí).',
-                    'Lộ trình thăng tiến rõ ràng lên Team Leader sau 6 tháng.',
-                    'Du lịch, Teambuilding, BHXH đầy đủ.'
-                ],
-                requirements: [
-                    'Độ tuổi 18-35, giọng nói rõ ràng, tự tin.',
-                    'Yêu thích lĩnh vực tài chính, mong muốn thu nhập cao.',
-                    'Chấp nhận ứng viên chưa có kinh nghiệm (được đào tạo).'
-                ]
+                id: 1,
+                title: "Chuyên viên Tư vấn Thẻ tín dụng UOB",
+                company: "UOB",
+                bankLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/UOB_Logo.svg/2560px-UOB_Logo.svg.png",
+                salary: "15 - 20 Triệu++/tháng",
+                location: "Cầu Giấy, Hà Nội",
+                type: "Full-time",
+                tags: ["Hot", "Hoa hồng cao"],
+                image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                desc: "Thực hiện cuộc gọi ra cho Khách Hàng theo Data có sẵn. Giới thiệu sản phẩm thẻ ATM, Thẻ tín dụng, khoản vay. Tư vấn CTKM đặc biệt.",
+                benefits: "Thu nhập 15-20tr++ (Lương cứng + HH không giới hạn). Thưởng nóng, thưởng thi đua. Đào tạo 5 ngày có hỗ trợ chi phí. Lộ trình thăng tiến lên Leader/Supervisor.",
+                req: "Nam/Nữ 18-35 tuổi. Không nợ xấu. Giao tiếp nhanh nhẹn, cầu thị. Có kinh nghiệm telesales > 1 năm là lợi thế.",
+                link: "https://apply.bell24.vn/uob"
             },
             {
-                id: 'bidv',
-                bankName: 'BIDV',
-                title: 'Nhân Viên Tư Vấn Khách Hàng',
-                type: 'Full-time',
-                salary: '7 - 8 Triệu + Thưởng',
-                location: 'BIDV Tower, 545 Nguyễn Văn Cừ, Long Biên',
-                image: 'https://th.bing.com/th/id/R.1f0a53d98b94089ea45ba5f06c0ac992?rik=aINu5R3NgQ%2br6Q&riu=http%3a%2f%2ffiles.auditnews.vn%2f2024%2f03%2f20%2fbidv.jpg&ehk=hMW1Vv3WemhVb3sjISye7yORH1lDSEQrcOGQFi2om2c%3d&risl=&pid=ImgRaw&r=0',
-                logoBg: 'bg-green-600',
-                tags: ['Ổn định', 'Thưởng tốt'],
-                description: [
-                    'Gọi điện chăm sóc và tư vấn CTKM cho khách hàng BIDV.',
-                    'Hướng dẫn khách hàng hoàn thiện hồ sơ mở thẻ/khoản vay.',
-                    'Cập nhật lịch sử cuộc gọi lên hệ thống CRM.'
-                ],
-                benefits: [
-                    'Thu nhập ổn định, nhận 100% lương thử việc.',
-                    'Thưởng thi đua hàng tháng, quý.',
-                    'Làm việc giờ hành chính, nghỉ Chủ Nhật & Lễ Tết.',
-                    'Văn phòng hạng A tại BIDV Tower.'
-                ],
-                requirements: [
-                    'Tốt nghiệp THPT trở lên.',
-                    'Không nói ngọng, không giọng địa phương.',
-                    'Chăm chỉ, trách nhiệm với công việc.'
-                ]
+                id: 2,
+                title: "Nhân viên CSKH Ngân hàng MB (Inbound)",
+                company: "MB",
+                bankLogo: "https://upload.wikimedia.org/wikipedia/commons/2/25/Logo_MB_new.png",
+                salary: "7 - 9 Triệu/tháng",
+                location: "Cát Linh, Hà Nội",
+                type: "Full-time",
+                tags: ["Không Sale", "Ổn định"],
+                image: "https://images.unsplash.com/photo-1549923746-c502d488b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+                desc: "Tiếp nhận cuộc gọi giải đáp thắc mắc dịch vụ thẻ. Hỗ trợ khóa thẻ, tra soát giao dịch. KHÔNG BÁN HÀNG, KHÔNG ÁP DOANH SỐ.",
+                benefits: "Thu nhập 7-9 triệu/tháng. Đào tạo miễn phí, hỗ trợ 1.000.000đ/khóa. BHXH, BHYT đầy đủ. Môi trường trẻ trung.",
+                req: "Tốt nghiệp THPT trở lên. Giọng nói chuẩn, không ngọng. Chịu được áp lực công việc. Làm việc xoay ca (có ca đêm ít).",
+                link: "https://apply.bell24.vn/mb-inbound"
             },
             {
-                id: 'mbbank',
-                bankName: 'MB Bank',
-                title: 'CSKH Inbound (Không Sale)',
-                type: 'Full-time (Xoay ca)',
-                salary: '7 - 9 Triệu',
-                location: '21 Cát Linh, Đống Đa',
-                image: 'https://vaynhanhonline.com.vn/wp-content/uploads/2021/09/gio-lam-viec-mb-bank-anh-dai-dien.jpg',
-                logoBg: 'bg-blue-600',
-                tags: ['Không áp số', 'Môi trường trẻ'],
-                description: [
-                    'Tiếp nhận cuộc gọi đến (Inbound), giải đáp thắc mắc về thẻ/tk MB.',
-                    'Hỗ trợ khách hàng xử lý sự cố giao dịch online.',
-                    'Tuyệt đối KHÔNG BÁN HÀNG, KHÔNG ÁP DOANH SỐ.'
-                ],
-                benefits: [
-                    'Thu nhập cạnh tranh cho vị trí không sale.',
-                    'Đào tạo 10 ngày có hỗ trợ chi phí 1.000.000đ.',
-                    'Môi trường GenZ năng động, sếp tâm lý.',
-                    'Chế độ bảo hiểm, thưởng lễ tết đầy đủ.'
-                ],
-                requirements: [
-                    'Có thể làm việc xoay ca (bao gồm ca đêm ít).',
-                    'Kiên nhẫn, giọng nói nhẹ nhàng, truyền cảm.',
-                    'Kỹ năng tin học văn phòng cơ bản.'
-                ]
+                id: 3,
+                title: "Tư vấn viên Khách hàng BIDV",
+                company: "BIDV",
+                bankLogo: "https://upload.wikimedia.org/wikipedia/commons/6/6c/BIDV_Logo.svg",
+                salary: "7 - 8 Triệu/tháng",
+                location: "Long Biên, Hà Nội",
+                type: "Full-time",
+                tags: ["Giờ hành chính"],
+                image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                desc: "Gọi điện theo Data BIDV cung cấp. Tư vấn CTKM, hướng dẫn mở thẻ, hoàn thiện hồ sơ. Cập nhật kết quả lên hệ thống.",
+                benefits: "Lương cứng + Chuyên cần + Thưởng. Nhận 100% lương thử việc. Hỗ trợ 700k khóa đào tạo. Làm việc giờ hành chính (nghỉ CN).",
+                req: "Giọng chuẩn, không địa phương. Kỹ năng giao tiếp tốt. Có trách nhiệm.",
+                link: "https://apply.bell24.vn/bidv"
             },
             {
-                id: 'tpbank-pt',
-                bankName: 'TP Bank',
-                title: 'Nhân Viên CSKH (Part-time)',
-                type: 'Part-time',
-                salary: '3 - 5 Triệu',
-                location: 'Nhiều điểm tại HN (Lê Ngọc Hân, Đội Cấn...)',
-                image: 'https://vntopfood.com/wp-content/uploads/2021/09/Danh-sach-chi-nhanh-PGD-TPbank-gan-day-o-quan-3.jpg',
-                logoBg: 'bg-purple-600',
-                tags: ['Cho sinh viên', 'Linh hoạt'],
-                description: [
-                    'Hỗ trợ giải đáp thắc mắc dịch vụ TPBank (LiveBank, E-banking).',
-                    'Làm việc ca tối: 17h-21h hoặc 18h-22h.',
-                    'Phù hợp cho sinh viên muốn kiếm thêm thu nhập và kinh nghiệm.'
-                ],
-                benefits: [
-                    'Lương cứng theo giờ + Thưởng KPI.',
-                    'Được training kỹ năng mềm chuyên nghiệp.',
-                    'Cơ hội lên nhân viên chính thức sau khi ra trường.'
-                ],
-                requirements: [
-                    'Sinh viên năm 3, 4 hoặc mới ra trường.',
-                    'Cam kết làm việc tối thiểu 6 tháng.',
-                    'Nhanh nhẹn, ham học hỏi.'
-                ]
+                id: 4,
+                title: "CSKH TPBank Part-time (Ca Tối)",
+                company: "TPBank",
+                bankLogo: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Logo_TPBank.svg",
+                salary: "3 - 5 Triệu/tháng",
+                location: "Hà Nội",
+                type: "Part-time",
+                tags: ["Sinh viên", "Làm thêm"],
+                image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+                desc: "Tiếp nhận cuộc gọi, hỗ trợ thông tin thẻ/tài khoản TPBank. Ca tối 17h-21h hoặc 18h-22h. Phù hợp sinh viên.",
+                benefits: "Thu nhập 3-5 triệu. Đào tạo bài bản (có hỗ trợ phí). Cơ hội lên nhân viên chính thức.",
+                req: "Sinh viên năm 3, 4 hoặc mới ra trường. Nhanh nhẹn, giọng dễ nghe.",
+                link: "https://apply.bell24.vn/tpbank-part"
             },
             {
-                id: 'tpbank-ft',
-                bankName: 'TP Bank',
-                title: 'Chuyên Viên CSKH (Full-time)',
-                type: 'Full-time',
-                salary: '7 - 10 Triệu',
-                location: 'Hoàng Mai / Cầu Giấy',
-                image: 'https://img.topbank.vn/2018/04/10/jDFnkIeH/ngan-hang-tpbank-0bff.jpg',
-                logoBg: 'bg-purple-700',
-                tags: ['Thăng tiến', 'Phúc lợi tốt'],
-                description: [
-                    'Tiếp nhận cuộc gọi KH VIP, xử lý khiếu nại chuyên sâu.',
-                    'Hỗ trợ các nghiệp vụ thẻ quốc tế, vay thấu chi.',
-                    'Đảm bảo chỉ số hài lòng khách hàng (CSAT).'
-                ],
-                benefits: [
-                    'Thu nhập hấp dẫn: Lương cứng + Phụ cấp + Thưởng CSAT.',
-                    'Review tăng lương định kỳ 6 tháng/lần.',
-                    'Gói bảo hiểm sức khỏe nâng cao.',
-                    'Team building, Company trip hàng năm.'
-                ],
-                requirements: [
-                    'Tốt nghiệp Cao đẳng/Đại học.',
-                    'Ưu tiên có kinh nghiệm CSKH/Call Center.',
-                    'Chịu được áp lực công việc, xử lý tình huống tốt.'
-                ]
+                id: 5,
+                title: "Thực tập sinh Telesales UOB",
+                company: "UOB",
+                bankLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/UOB_Logo.svg/2560px-UOB_Logo.svg.png",
+                salary: "2M + Incentive",
+                location: "Cầu Giấy, Hà Nội",
+                type: "Internship",
+                tags: ["Thực tập", "Có dấu mộc"],
+                image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                desc: "Gọi tư vấn theo kịch bản (2.5-3h talktime/ngày). Báo cáo kết quả. Học hỏi quy trình làm việc ngân hàng quốc tế.",
+                benefits: "Phụ cấp 2M/tháng + Incentive (250k-1.250k). Được đào tạo kỹ năng sales. Hỗ trợ dấu thực tập.",
+                req: "Sinh viên năm cuối, thực tập tối thiểu 3 tháng. Định hướng theo ngành Ngân hàng/Sales.",
+                link: "https://apply.bell24.vn/uob-intern"
+            },
+             {
+                id: 6,
+                title: "Nhân viên CSKH LP Bank (Inbound)",
+                company: "LPBank",
+                bankLogo: "https://inkythuatso.com/uploads/images/2021/09/logo-lienvietpostbank-inkythuatso-01-13-16-09-54.jpg",
+                salary: "7 - 9 Triệu/tháng",
+                location: "Hà Nội",
+                type: "Full-time",
+                tags: ["Mới", "Không Sale"],
+                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                desc: "Hỗ trợ khách hàng LP Bank qua tổng đài: thẻ, e-banking. Không áp doanh số. Làm việc 6 ca/tuần.",
+                benefits: "Thu nhập 7-9 triệu. Đào tạo 8 ngày (hỗ trợ 100k/ngày). Thưởng lễ tết, du lịch hàng năm.",
+                req: "Tốt nghiệp Trung cấp trở lên. Giọng miền Bắc chuẩn. Tư duy dịch vụ tốt.",
+                link: "https://apply.bell24.vn/lpbank"
             }
         ];
 
-        // --- COMPONENTS ---
+        // --- RENDER FUNCTIONS ---
 
-        const FilterButton = ({ label, active, onClick }) => (
-            <button 
-                onClick={onClick}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                active 
-                ? 'bg-red-600 text-white shadow-lg shadow-red-500/30 transform scale-105' 
-                : 'bg-white text-gray-600 border border-gray-200 hover:border-red-400 hover:text-red-500'
-                }`}
-            >
-                {label}
-            </button>
-        );
+        function renderJobCard(job, isFeatured = false) {
+            return `
+                <div class="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col h-full transform hover:-translate-y-2 overflow-hidden" data-aos="${isFeatured ? '' : 'fade-up'}">
+                    
+                    <!-- Image Header -->
+                    <div class="h-40 relative overflow-hidden img-zoom-container">
+                        <img src="${job.image}" alt="${job.title}" class="w-full h-full object-cover img-zoom">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-3 left-4 flex items-center bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg shadow-sm">
+                            <span class="text-xs font-bold text-brand-navy">${job.company}</span>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-brand-orange text-white text-xs font-bold px-2 py-1 rounded shadow-md">${job.type}</span>
+                        </div>
+                    </div>
 
-        const JobCard = ({ job, onClick }) => {
-            return (
-                <div 
-                    className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 cursor-pointer relative flex flex-col h-full transform hover:-translate-y-2 animate-slide-up"
-                    onClick={() => onClick(job)}
-                >
-                    {/* Image Header with Overlay */}
-                    <div className="h-48 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                        <img 
-                            src={job.image} 
-                            alt={job.bankName} 
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
+                    <!-- Content -->
+                    <div class="p-5 flex-1 flex flex-col">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2 group-hover:text-brand-blue transition line-clamp-2" title="${job.title}">${job.title}</h3>
                         
-                        {/* Bank Logo Badge */}
-                        <div className={`absolute top-4 left-4 z-20 ${job.logoBg} text-white p-2 rounded-lg shadow-lg font-bold text-sm tracking-wider flex items-center gap-1`}>
-                            <IconStar size={14} fill="white" /> {job.bankName}
+                        <div class="flex items-center text-sm text-slate-500 mb-3">
+                            <i class="fas fa-map-marker-alt mr-2 text-slate-400"></i> ${job.location}
                         </div>
 
-                        {/* Tags */}
-                        <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 items-end">
-                            {job.tags.map(tag => (
-                                <span key={tag} className="px-2 py-1 bg-white/90 backdrop-blur-sm text-xs font-bold text-gray-800 rounded-md shadow-sm">
-                                    {tag}
-                                </span>
-                            ))}
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${job.tags.map(tag => `<span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded border border-blue-100">${tag}</span>`).join('')}
                         </div>
                         
-                        {/* Title overlay */}
-                        <div className="absolute bottom-3 left-4 z-20 pr-4">
-                            <p className="text-white/90 text-xs uppercase tracking-widest font-semibold mb-1">{job.type}</p>
-                            <h3 className="text-white text-lg font-bold leading-tight group-hover:text-red-400 transition-colors">
-                                {job.title}
-                            </h3>
+                        <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-brand-orange font-extrabold text-lg">${job.salary}</span>
                         </div>
                     </div>
 
-                    {/* Body */}
-                    <div className="p-5 flex flex-col flex-grow">
-                        <div className="space-y-3 mb-6">
-                            <div className="flex items-start text-gray-600 text-sm">
-                                <IconDollar size={18} className="text-green-600 mr-2 shrink-0 mt-0.5" />
-                                <span className="font-bold text-green-700 text-base">{job.salary}</span>
-                            </div>
-                            <div className="flex items-start text-gray-500 text-sm">
-                                <IconMapPin size={18} className="text-red-500 mr-2 shrink-0 mt-0.5" />
-                                <span className="line-clamp-1">{job.location}</span>
-                            </div>
-                        </div>
-
-                        {/* Footer */}
-                        <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between group-hover:border-red-100 transition-colors">
-                            <span className="text-xs text-gray-400 font-medium">Cập nhật 2 giờ trước</span>
-                            <span className="flex items-center text-red-600 text-sm font-bold group-hover:translate-x-1 transition-transform">
-                                Ứng tuyển <IconArrowRight size={16} className="ml-1" />
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const JobDetailModal = ({ job, onClose }) => {
-            if (!job) return null;
-            
-            return (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div 
-                        className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity animate-fade-in" 
-                        onClick={onClose}
-                    ></div>
-                    
-                    <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl z-10 overflow-hidden flex flex-col max-h-[90vh] animate-slide-up">
-                        {/* Header Image */}
-                        <div className="relative h-48 md:h-64 shrink-0">
-                            <img src={job.image} className="w-full h-full object-cover" alt="cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                            <button 
-                                onClick={onClose}
-                                className="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur-md transition-all border border-white/20"
-                            >
-                                <IconX size={24} />
-                            </button>
-                            
-                            <div className="absolute bottom-6 left-6 md:left-8 text-white">
-                                <div className={`inline-block ${job.logoBg} px-3 py-1 rounded-md text-sm font-bold mb-2 shadow-lg`}>
-                                    {job.bankName}
-                                </div>
-                                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">{job.title}</h2>
-                                <div className="flex flex-wrap gap-4 text-sm md:text-base opacity-90">
-                                    <span className="flex items-center"><IconMapPin size={16} className="mr-1"/> {job.location}</span>
-                                    <span className="flex items-center"><IconClock size={16} className="mr-1"/> {job.type}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-gray-50 custom-scrollbar">
-                            <div className="grid md:grid-cols-3 gap-8">
-                                {/* Left Column (Main Info) */}
-                                <div className="md:col-span-2 space-y-8">
-                                    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                        <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4 uppercase tracking-wide">
-                                            <IconBriefcase className="mr-2 text-red-600" size={20} /> Mô tả công việc
-                                        </h3>
-                                        <ul className="space-y-3">
-                                            {job.description.map((item, i) => (
-                                                <li key={i} className="flex items-start text-gray-600 leading-relaxed">
-                                                    <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 mr-3 shrink-0"></span>
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </section>
-
-                                    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                        <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4 uppercase tracking-wide">
-                                            <IconStar className="mr-2 text-yellow-500" size={20} fill="currentColor" /> Quyền lợi
-                                        </h3>
-                                        <div className="grid gap-3">
-                                            {job.benefits.map((item, i) => (
-                                                <div key={i} className="flex items-start p-3 bg-red-50/50 rounded-lg border border-red-50">
-                                                    <IconCheck size={18} className="text-red-500 mr-3 shrink-0 mt-0.5" />
-                                                    <span className="text-gray-700 font-medium">{item}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </section>
-
-                                    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                        <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4 uppercase tracking-wide">
-                                            <IconCheck className="mr-2 text-blue-600" size={20} /> Yêu cầu
-                                        </h3>
-                                        <ul className="space-y-3">
-                                            {job.requirements.map((item, i) => (
-                                                <li key={i} className="flex items-start text-gray-600">
-                                                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 mr-3 shrink-0"></span>
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </section>
-                                </div>
-
-                                {/* Right Column (Summary & CTA) */}
-                                <div className="md:col-span-1">
-                                    <div className="bg-white p-6 rounded-xl shadow-lg border border-red-100 sticky top-0">
-                                        <h3 className="text-gray-900 font-bold mb-6 text-center text-lg">Tổng quan</h3>
-                                        
-                                        <div className="space-y-5 mb-8">
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-400 uppercase font-semibold mb-1">Mức lương</p>
-                                                <p className="text-xl font-bold text-green-600">{job.salary}</p>
-                                            </div>
-                                            <div className="h-px bg-gray-100"></div>
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-400 uppercase font-semibold mb-1">Hình thức</p>
-                                                <p className="text-gray-800 font-medium">{job.type}</p>
-                                            </div>
-                                            <div className="h-px bg-gray-100"></div>
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-400 uppercase font-semibold mb-1">Kinh nghiệm</p>
-                                                <p className="text-gray-800 font-medium">Không yêu cầu</p>
-                                            </div>
-                                        </div>
-
-                                        <button className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-500/30 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2">
-                                            Ứng tuyển ngay <IconArrowRight size={18}/>
-                                        </button>
-                                        <p className="text-xs text-center text-gray-400 mt-4">
-                                            Phản hồi trong vòng 24h
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const Navbar = () => (
-            <nav className="glass-effect sticky top-0 z-40 border-b border-gray-100">
-                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-2 cursor-pointer">
-                        <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center text-white font-black text-xl shadow-lg">B</div>
-                        <div>
-                            <h1 className="text-xl font-bold text-gray-900 tracking-tight leading-none">BELLSYSTEM<span className="text-red-600">24</span></h1>
-                            <p className="text-[10px] text-gray-500 font-bold tracking-[0.2em]">VIETNAM</p>
-                        </div>
-                    </div>
-                    
-                    <div className="hidden md:flex items-center gap-8">
-                        <a href="#" className="text-gray-600 hover:text-red-600 font-medium transition-colors">Trang chủ</a>
-                        <a href="#" className="text-gray-600 hover:text-red-600 font-medium transition-colors">Về chúng tôi</a>
-                        <a href="#" className="text-red-600 font-bold">Việc làm Hot</a>
-                        <button className="bg-gray-900 hover:bg-gray-800 text-white px-5 py-2 rounded-full font-medium transition-all shadow-md">
-                            Liên hệ HR
+                    <!-- Actions -->
+                    <div class="px-5 pb-5 grid grid-cols-2 gap-3">
+                        <button onclick="openModal(${job.id})" class="py-2 rounded-lg border border-brand-blue text-brand-blue font-semibold text-sm hover:bg-blue-50 transition">
+                            Xem chi tiết
                         </button>
+                        <a href="${job.link}" target="_blank" class="py-2 rounded-lg bg-brand-navy text-white font-semibold text-sm flex justify-center items-center hover:bg-brand-blue transition shadow-lg hover:shadow-blue-500/30">
+                            Ứng tuyển <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                        </a>
                     </div>
-
-                    <button className="md:hidden p-2 text-gray-600 hover:text-red-600">
-                        <IconMenu size={24} />
-                    </button>
                 </div>
-            </nav>
-        );
+            `;
+        }
 
-        const App = () => {
-            const [filter, setFilter] = useState('All');
-            const [selectedJob, setSelectedJob] = useState(null);
-            const [searchTerm, setSearchTerm] = useState('');
+        // --- LOGIC ---
 
-            const filteredJobs = JOBS_DATA.filter(job => {
-                const matchType = filter === 'All' 
-                ? true 
-                : filter === 'Full-time' 
-                    ? job.type.toLowerCase().includes('full') 
-                    : job.type.toLowerCase().includes('part');
-                const matchSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                                    job.bankName.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchType && matchSearch;
-            });
+        function init() {
+            // Render Featured (First 3)
+            const featuredContainer = document.getElementById('featured-container');
+            featuredContainer.innerHTML = jobs.slice(0, 3).map(job => renderJobCard(job, true)).join('');
 
-            return (
-                <div className="min-h-screen">
-                    <Navbar />
+            // Render All Jobs initially
+            filterJobs();
 
-                    {/* Hero Section */}
-                    <div className="relative bg-gray-900 text-white pt-24 pb-32 overflow-hidden">
-                        <div className="absolute inset-0">
-                            <img 
-                                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1600" 
-                                className="w-full h-full object-cover opacity-20"
-                                alt="office background"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-gray-900/80 to-gray-900/90"></div>
-                        </div>
+            // Event Listeners for Filters
+            document.getElementById('searchInput').addEventListener('input', filterJobs);
+            document.getElementById('typeFilter').addEventListener('change', filterJobs);
+            document.getElementById('bankFilter').addEventListener('change', filterJobs);
+        }
 
-                        <div className="container mx-auto px-6 relative z-10 text-center animate-slide-up">
-                            <span className="inline-block py-1 px-4 rounded-full bg-white/10 border border-white/20 text-red-400 font-semibold mb-6 backdrop-blur-md">
-                                #1 Contact Center Vietnam
-                            </span>
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-                                Khẳng Định Bản Lĩnh <br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
-                                Tại Các Ngân Hàng Lớn
-                                </span>
-                            </h1>
-                            <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
-                                Cơ hội làm việc chính thức tại BIDV, MB Bank, TP Bank, UOB với thu nhập hấp dẫn và lộ trình thăng tiến rõ ràng.
-                            </p>
+        function filterJobs() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const type = document.getElementById('typeFilter').value;
+            const bank = document.getElementById('bankFilter').value;
+            const grid = document.getElementById('jobs-grid');
+            const empty = document.getElementById('empty-state');
 
-                            {/* Search Bar */}
-                            <div className="max-w-3xl mx-auto bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-2">
-                                <div className="flex-1 flex items-center px-4 bg-gray-50 rounded-xl">
-                                    <IconSearch className="text-gray-400" size={20} />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Tìm kiếm vị trí, ngân hàng..." 
-                                        className="w-full p-3 bg-transparent outline-none text-gray-800 placeholder-gray-400"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                    />
-                                </div>
-                                <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg md:w-auto w-full">
-                                    Tìm việc ngay
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            grid.innerHTML = '<div class="col-span-3 flex justify-center py-10"><div class="loader"></div></div>'; // Loading state
 
-                    {/* Jobs Section */}
-                    <main className="container mx-auto px-6 -mt-20 relative z-20 pb-20">
-                        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-                            <h2 className="text-2xl font-bold text-gray-900">
-                                Việc làm đang tuyển <span className="text-gray-400 font-normal text-lg">({filteredJobs.length})</span>
-                            </h2>
-                            
-                            <div className="flex gap-2 p-1 bg-white rounded-full shadow-sm border border-gray-100 overflow-x-auto max-w-full">
-                                {['All', 'Full-time', 'Part-time'].map(f => (
-                                    <FilterButton 
-                                        key={f} 
-                                        label={f === 'All' ? 'Tất cả' : f} 
-                                        active={filter === f} 
-                                        onClick={() => setFilter(f)} 
-                                    />
-                                ))}
-                            </div>
-                        </div>
+            setTimeout(() => {
+                const filtered = jobs.filter(job => {
+                    const matchSearch = job.title.toLowerCase().includes(search) || job.desc.toLowerCase().includes(search);
+                    const matchType = type === 'All' || job.type === type;
+                    const matchBank = bank === 'All' || job.company === bank;
+                    return matchSearch && matchType && matchBank;
+                });
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredJobs.length > 0 ? (
-                                filteredJobs.map(job => (
-                                    <JobCard 
-                                        key={job.id} 
-                                        job={job} 
-                                        onClick={setSelectedJob} 
-                                    />
-                                ))
-                            ) : (
-                                <div className="col-span-full text-center py-20">
-                                    <div className="bg-white inline-block p-6 rounded-full shadow-sm mb-4">
-                                        <IconSearch size={48} className="text-gray-300" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-700">Không tìm thấy công việc phù hợp</h3>
-                                    <p className="text-gray-500">Vui lòng thử từ khóa khác hoặc chọn "Tất cả"</p>
-                                </div>
-                            )}
-                        </div>
-                    </main>
+                if (filtered.length > 0) {
+                    grid.innerHTML = filtered.map(job => renderJobCard(job)).join('');
+                    empty.classList.add('hidden');
+                } else {
+                    grid.innerHTML = '';
+                    empty.classList.remove('hidden');
+                }
+            }, 300); // Fake delay for smooth feel
+        }
 
-                    {/* Footer */}
-                    <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
-                        <div className="container mx-auto px-6">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white font-bold">B</div>
-                                    <span className="text-xl font-bold text-gray-900">BELLSYSTEM24</span>
-                                </div>
-                                <div className="flex flex-wrap justify-center gap-8 text-gray-500 text-sm font-medium">
-                                    <a href="#" className="hover:text-red-600 transition-colors">Điều khoản</a>
-                                    <a href="#" className="hover:text-red-600 transition-colors">Bảo mật</a>
-                                    <a href="#" className="hover:text-red-600 transition-colors">Liên hệ</a>
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-center justify-center text-center text-gray-400 text-sm space-y-2">
-                                <div className="flex items-center gap-2">
-                                    <IconPhone size={14} /> <span>Hotline: 1900 xxxx</span>
-                                </div>
-                                <div>© 2024 Bellsystem24 Vietnam. All rights reserved.</div>
-                            </div>
-                        </div>
-                    </footer>
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('typeFilter').value = 'All';
+            document.getElementById('bankFilter').value = 'All';
+            filterJobs();
+        }
 
-                    {/* Modal */}
-                    {selectedJob && (
-                        <JobDetailModal 
-                            job={selectedJob} 
-                            onClose={() => setSelectedJob(null)} 
-                        />
-                    )}
-                </div>
-            );
-        };
+        // --- MODAL LOGIC ---
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        function openModal(id) {
+            const job = jobs.find(j => j.id === id);
+            if (!job) return;
+
+            // Fill Data
+            document.getElementById('modalTitle').innerText = job.title;
+            document.getElementById('modalImage').src = job.image;
+            document.getElementById('modalSalary').innerText = job.salary;
+            document.getElementById('modalLocation').innerText = job.location;
+            document.getElementById('modalType').innerText = job.type;
+            document.getElementById('modalDesc').innerText = job.desc;
+            document.getElementById('modalBenefits').innerText = job.benefits;
+            document.getElementById('modalRequirements').innerText = job.req;
+            document.getElementById('modalApplyBtn').href = job.link;
+            document.getElementById('modalBankBadge').innerText = job.company;
+
+            // Show Animation
+            const modal = document.getElementById('jobModal');
+            const content = document.getElementById('modalContent');
+            const overlay = document.getElementById('modalOverlay');
+
+            modal.classList.remove('hidden');
+            // Trigger reflow
+            void modal.offsetWidth;
+
+            overlay.classList.remove('opacity-0');
+            content.classList.remove('opacity-0', 'translate-y-4', 'scale-95');
+            content.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+            
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('jobModal');
+            const content = document.getElementById('modalContent');
+            const overlay = document.getElementById('modalOverlay');
+
+            content.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+            content.classList.add('opacity-0', 'translate-y-4', 'scale-95');
+            overlay.classList.add('opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close modal on click outside
+        document.getElementById('modalOverlay').addEventListener('click', closeModal);
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+
+        // Run Init
+        window.onload = init;
+
+        // Sticky Navbar Style Change on Scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/90', 'shadow-md');
+                nav.classList.remove('bg-transparent', 'shadow-sm');
+            } else {
+                // Keep default class
+            }
+        });
+
     </script>
 </body>
 </html>
