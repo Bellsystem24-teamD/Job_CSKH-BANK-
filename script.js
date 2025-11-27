@@ -3,7 +3,7 @@
 // ==============================================================
 
 // 👇 LINK GOOGLE SCRIPT CỦA BẠN (Đã dán sẵn) 👇
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwy8a6W-U7e4VB62khY96TDAnlBZ0naAg8Ni74HnYdoaM3qqbt1Sz6oGRC0rE53s_ql/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6gUmC-Rpy_UKunsd_e5EYNT1cYWTcH61dS65fcPD7PnUEmzZfqdKUM_tErUZBpxdv/exec';
 
 // DỮ LIỆU VIỆC LÀM (Đã làm sạch text)
 const jobs = [
