@@ -306,25 +306,25 @@
                         <p class="text-sm text-slate-500 mt-1">Điền thông tin để HR liên hệ ngay.</p>
                     </div>
                     
-                    <form onsubmit="submitForm(event)" class="space-y-4">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">Họ và tên <span class="text-red-500">*</span></label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Nguyễn Văn A" required>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">Số điện thoại <span class="text-red-500">*</span></label>
-                            <input type="tel" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="09xxxx..." required>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">Link CV (Nếu có)</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Google Drive...">
-                        </div>
-                        
-                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all mt-2 flex items-center justify-center gap-2">
-                            <span>NỘP HỒ SƠ</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </form>
+<form onsubmit="submitForm(event)" class="space-y-4">
+    <div class="space-y-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Họ và tên <span class="text-red-500">*</span></label>
+        <input name="hoten" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Nguyễn Văn A" required>
+    </div>
+    <div class="space-y-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Số điện thoại <span class="text-red-500">*</span></label>
+        <input name="sdt" type="tel" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="09xxxx..." required>
+    </div>
+    <div class="space-y-1">
+        <label class="text-[10px] font-bold text-slate-400 uppercase">Link CV (Nếu có)</label>
+        <input name="cv_link" type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Google Drive...">
+    </div>
+    
+    <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all mt-2 flex items-center justify-center gap-2">
+        <span>NỘP HỒ SƠ</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+</form>                    
                 </div>
             </div>
         </div>

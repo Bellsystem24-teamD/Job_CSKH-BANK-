@@ -6,11 +6,9 @@ const jobs = [
         id: 1,
         title: "Nhân viên CSKH TPBank (Inbound)",
         bank: "TPBank",
-        // Theme Tím - Sang trọng
         themeText: "text-purple-700",
         themeBg: "bg-purple-50",
         themeBtn: "bg-purple-600 hover:bg-purple-700",
-        // Ảnh văn phòng hiện đại
         image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", 
         type: "Full-time",
         salary: "7.000.000đ - 9.000.000đ", 
@@ -35,7 +33,6 @@ const jobs = [
         id: 2,
         title: "Nhân viên CSKH MB Bank",
         bank: "MBBank",
-        // Theme Xanh Dương Đậm - Tin cậy
         themeText: "text-blue-700",
         themeBg: "bg-blue-50",
         themeBtn: "bg-blue-700 hover:bg-blue-800",
@@ -62,7 +59,6 @@ const jobs = [
         id: 3,
         title: "Chuyên viên Tư vấn Thẻ UOB",
         bank: "UOB",
-        // Theme Hồng/Đỏ - Năng động (Brand UOB)
         themeText: "text-rose-600",
         themeBg: "bg-rose-50",
         themeBtn: "bg-rose-600 hover:bg-rose-700",
@@ -89,7 +85,6 @@ const jobs = [
         id: 4,
         title: "Nhân viên Tư vấn BIDV",
         bank: "BIDV",
-        // Theme Xanh Ngọc - Tươi mới (Brand BIDV)
         themeText: "text-emerald-600",
         themeBg: "bg-emerald-50",
         themeBtn: "bg-emerald-600 hover:bg-emerald-700",
@@ -116,7 +111,6 @@ const jobs = [
         id: 5,
         title: "CSKH Ngân hàng LPBank",
         bank: "LPBank",
-        // Theme Cam - Nhiệt huyết (Brand LPBank)
         themeText: "text-orange-600",
         themeBg: "bg-orange-50",
         themeBtn: "bg-orange-500 hover:bg-orange-600",
@@ -143,7 +137,6 @@ const jobs = [
         id: 6,
         title: "Thực tập sinh Telesales UOB",
         bank: "UOB TTS",
-        // Theme Xám Indigo - Chuyên nghiệp cho TTS
         themeText: "text-indigo-600",
         themeBg: "bg-indigo-50",
         themeBtn: "bg-indigo-600 hover:bg-indigo-700",
@@ -348,52 +341,47 @@ function closeModal() {
 modalOverlay.addEventListener('click', closeModal);
 
 // ==========================================
-// 5. SUBMIT FORM (LIÊN KẾT GOOGLE SHEETS)
+// 5. SUBMIT FORM (GỬI VỀ GOOGLE SHEETS)
 // ==========================================
 function submitForm(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button');
     const originalContent = btn.innerHTML;
     
-    // 1. Lấy dữ liệu form
+    // 1. Lấy dữ liệu từ form
     const form = e.target;
     const data = new FormData(form);
     
-    // *QUAN TRỌNG: DÁN URL CỦA GOOGLE APP SCRIPT VÀO DƯỚI ĐÂY*
-    // Nếu chưa có, hãy tạo theo hướng dẫn ở bước trước. Nếu chỉ muốn test, để trống.
-    const scriptURL = ''; 
+    // 🟢 ĐÂY LÀ LINK GOOGLE SHEET CỦA BẠN 🟢
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwy8a6W-U7e4VB62khY96TDAnlBZ0naAg8Ni74HnYdoaM3qqbt1Sz6oGRC0rE53s_ql/exec';
 
     // 2. Hiệu ứng Loading
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Đang gửi...';
     btn.disabled = true;
     btn.classList.add('opacity-80', 'cursor-not-allowed');
 
-    // 3. Logic gửi
-    if (scriptURL) {
-        fetch(scriptURL, { method: 'POST', body: data })
-            .then(response => {
-                alert('🎉 CHÚC MỪNG!\nHồ sơ đã được lưu thành công vào hệ thống.');
-                resetForm();
-            })
-            .catch(error => {
-                alert('❌ Lỗi kết nối! Vui lòng thử lại.');
-                resetForm();
-            });
-    } else {
-        // Chế độ Demo (khi chưa có URL)
-        setTimeout(() => {
-            alert('🎉 (DEMO) Gửi thành công!\n(Để lưu thật, hãy dán link Google Script vào biến scriptURL trong file script.js)');
-            resetForm();
-        }, 1500);
-    }
-
-    function resetForm() {
-        btn.innerHTML = originalContent;
-        btn.disabled = false;
-        btn.classList.remove('opacity-80', 'cursor-not-allowed');
-        form.reset();
-        closeModal();
-    }
+    // 3. Gửi dữ liệu
+    fetch(scriptURL, { method: 'POST', body: data })
+        .then(response => {
+            // Thông báo thành công
+            alert('🎉 CHÚC MỪNG!\nHồ sơ của bạn đã được lưu thành công vào hệ thống.\nBộ phận Tuyển dụng Bellsystem24 sẽ liên hệ bạn sớm.');
+            
+            // Reset form
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
+            btn.classList.remove('opacity-80', 'cursor-not-allowed');
+            form.reset();
+            closeModal();
+        })
+        .catch(error => {
+            // Thông báo lỗi
+            console.error('Error!', error.message);
+            alert('❌ Có lỗi xảy ra khi gửi đơn! Vui lòng kiểm tra kết nối mạng và thử lại.');
+            
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
+            btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        });
 }
 
 // ==========================================
