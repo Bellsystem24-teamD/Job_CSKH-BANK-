@@ -1,175 +1,169 @@
-// ==========================================
-// 1. DỮ LIỆU CÔNG VIỆC (DATA SOURCE)
-// ==========================================
+// ==============================================================
+// 1. DỮ LIỆU CÔNG VIỆC CHUẨN XÁC [Đã làm sạch text]
+// ==============================================================
 const jobs = [
     {
         id: 1,
         title: "Nhân viên CSKH TPBank (Inbound)",
         bank: "TPBank",
-        // Cấu hình màu sắc thương hiệu (Tím)
+        // Theme Tím - Sang trọng
         themeText: "text-purple-700",
         themeBg: "bg-purple-50",
         themeBtn: "bg-purple-600 hover:bg-purple-700",
-        // Ảnh đại diện văn phòng hiện đại
+        // Ảnh văn phòng hiện đại
         image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", 
         type: "Full-time",
-        salary: "7.000.000đ - 9.000.000đ", // [cite: 7]
-        location: "Hà Nội", // [cite: 26-28]
+        salary: "7.000.000đ - 9.000.000đ", 
+        location: "Hà Nội", 
         desc: [
-            "Tiếp nhận và xử lý cuộc gọi đến, giải đáp thắc mắc khách hàng chuyên nghiệp[cite: 3].",
-            "Tư vấn dịch vụ: mở thẻ, tài khoản, E-banking, các sản phẩm khác[cite: 4].",
-            "Không yêu cầu bán hàng – Không áp chỉ tiêu doanh số[cite: 5]."
+            "Tiếp nhận và xử lý cuộc gọi đến, giải đáp thắc mắc khách hàng chuyên nghiệp.",
+            "Tư vấn dịch vụ: mở thẻ, tài khoản, E-banking, các sản phẩm khác.",
+            "LƯU Ý: Không bán hàng – Không áp chỉ tiêu doanh số."
         ],
         req: [
-            "Nam/Nữ 18–35 tuổi, Tốt nghiệp Trung cấp trở lên (chấp nhận SV năm cuối)[cite: 16].",
-            "Giao tiếp tốt, giọng nói dễ nghe, không ngọng[cite: 17].",
-            "Không yêu cầu kinh nghiệm – được đào tạo bài bản[cite: 18]."
+            "Nam/Nữ 18–35 tuổi, Tốt nghiệp Trung cấp trở lên (chấp nhận SV năm cuối).",
+            "Giao tiếp tốt, giọng nói dễ nghe, không ngọng.",
+            "Không yêu cầu kinh nghiệm – được đào tạo bài bản."
         ],
         ben: [
-            "Thu nhập 7-9 triệu/tháng + Thưởng nóng[cite: 7, 13].",
-            "Hỗ trợ tài chính trong suốt quá trình đào tạo[cite: 9].",
-            "Đóng BHXH, BHYT, BHTN đầy đủ; Du lịch, Teambuilding hàng năm[cite: 12, 14]."
-        ],
-        timeLoc: "Xoay ca 07h00 – 22h00 (6 ngày/tuần) tại 44 Lê Ngọc Hân / 155 Đội Cấn / Ngoại Giao Đoàn [cite: 20, 26-28]."
+            "Thu nhập 7-9 triệu/tháng + Thưởng nóng.",
+            "Hỗ trợ tài chính trong suốt quá trình đào tạo.",
+            "Đóng BHXH, BHYT, BHTN đầy đủ; Du lịch hàng năm."
+        ]
     },
     {
         id: 2,
         title: "Nhân viên CSKH MB Bank",
         bank: "MBBank",
-        // Cấu hình màu sắc (Xanh dương đậm)
+        // Theme Xanh Dương Đậm - Tin cậy
         themeText: "text-blue-700",
         themeBg: "bg-blue-50",
         themeBtn: "bg-blue-700 hover:bg-blue-800",
         image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Full-time",
-        salary: "7.000.000đ - 9.000.000đ", // [cite: 144]
-        location: "Đống Đa, HN", // [cite: 136]
+        salary: "7.000.000đ - 9.000.000đ", 
+        location: "Đống Đa, HN", 
         desc: [
-            "Tiếp nhận cuộc gọi giải đáp thông tin dịch vụ thẻ MB Bank[cite: 133].",
-            "Gọi ra cho khách hàng gọi nhỡ lên tổng đài (khi có yêu cầu)[cite: 134].",
-            "Không bán hàng, không sale[cite: 135]."
+            "Tiếp nhận cuộc gọi giải đáp thông tin dịch vụ thẻ MB Bank.",
+            "Gọi ra cho khách hàng gọi nhỡ lên tổng đài (khi có yêu cầu).",
+            "Không bán hàng, không sale."
         ],
         req: [
-            "Tốt nghiệp Trung cấp trở lên (Chấp nhận chờ bằng)[cite: 150].",
-            "Nhanh nhẹn, hòa đồng, giọng nói chuẩn không ngọng[cite: 151, 152]."
+            "Tốt nghiệp Trung cấp trở lên (Chấp nhận chờ bằng).",
+            "Nhanh nhẹn, hòa đồng, giọng nói chuẩn không ngọng."
         ],
         ben: [
-            "Hỗ trợ 1.000.000đ khóa đào tạo (10 ngày)[cite: 145].",
-            "Làm việc tại Tòa nhà MBBank chuyên nghiệp, trẻ trung[cite: 146].",
-            "Hưởng đầy đủ BHXH + BHYT, thưởng lễ tết[cite: 148]."
-        ],
-        timeLoc: "Xoay ca luân phiên (có ca đêm) tại 21 Cát Linh, Đống Đa, HN[cite: 136, 137]."
+            "Hỗ trợ 1.000.000đ khóa đào tạo (10 ngày).",
+            "Làm việc tại Tòa nhà MBBank chuyên nghiệp, trẻ trung.",
+            "Hưởng đầy đủ BHXH + BHYT, thưởng lễ tết."
+        ]
     },
     {
         id: 3,
         title: "Chuyên viên Tư vấn Thẻ UOB",
         bank: "UOB",
-        // Cấu hình màu sắc (Đỏ hồng - Brand UOB)
+        // Theme Hồng/Đỏ - Năng động (Brand UOB)
         themeText: "text-rose-600",
         themeBg: "bg-rose-50",
         themeBtn: "bg-rose-600 hover:bg-rose-700",
         image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Full-time",
-        salary: "15 - 20 Triệu ++", // [cite: 108]
-        location: "Cầu Giấy, HN", // [cite: 128]
+        salary: "15 - 20 Triệu ++", 
+        location: "Cầu Giấy, HN", 
         desc: [
-            "Thực hiện cuộc gọi tư vấn thẻ ATM, thẻ tín dụng, khoản vay UOB theo Data công ty cấp[cite: 103, 104].",
-            "Trao đổi về Quyền lợi, CTKM đặc biệt dành cho khách hàng[cite: 105]."
+            "Thực hiện cuộc gọi tư vấn thẻ ATM, thẻ tín dụng, khoản vay UOB theo Data công ty cấp.",
+            "Trao đổi về Quyền lợi, CTKM đặc biệt dành cho khách hàng."
         ],
         req: [
-            "18-35 tuổi, Không nợ xấu ngân hàng[cite: 117, 118].",
-            "Có kinh nghiệm từ 1 năm telesale/sale là lợi thế[cite: 121].",
-            "Cầu thị, ham học hỏi, giao tiếp nhanh nhẹn[cite: 119, 120]."
+            "18-35 tuổi, Không nợ xấu ngân hàng.",
+            "Có kinh nghiệm từ 1 năm telesale/sale là lợi thế.",
+            "Cầu thị, ham học hỏi, giao tiếp nhanh nhẹn."
         ],
         ben: [
-            "Thu nhập 15-20tr++ (Lương cứng + Hoa hồng không giới hạn)[cite: 108].",
-            "Lộ trình thăng tiến lên Trưởng nhóm/Giám sát/Quản lý[cite: 109].",
-            "Thưởng nóng, thưởng du lịch, giải thưởng từ đối tác[cite: 114]."
-        ],
-        timeLoc: "Giờ hành chính T2-T6 (08:00-17:00), 2 ngày T7/tháng tại 1A Vũ Phạm Hàm[cite: 125, 126, 128]."
+            "Thu nhập 15-20tr++ (Lương cứng + Hoa hồng không giới hạn).",
+            "Lộ trình thăng tiến lên Trưởng nhóm/Giám sát/Quản lý.",
+            "Thưởng nóng, thưởng du lịch, giải thưởng từ đối tác."
+        ]
     },
     {
         id: 4,
         title: "Nhân viên Tư vấn BIDV",
         bank: "BIDV",
-        // Cấu hình màu sắc (Xanh ngọc lục bảo - Brand BIDV)
+        // Theme Xanh Ngọc - Tươi mới (Brand BIDV)
         themeText: "text-emerald-600",
         themeBg: "bg-emerald-50",
         themeBtn: "bg-emerald-600 hover:bg-emerald-700",
         image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Full-time",
-        salary: "7.000.000đ - 8.000.000đ", // [cite: 38]
-        location: "Long Biên, HN", // [cite: 51]
+        salary: "7.000.000đ - 8.000.000đ", 
+        location: "Long Biên, HN", 
         desc: [
-            "Gọi điện cho khách hàng theo Data từ BIDV cung cấp[cite: 32].",
-            "Tư vấn giới thiệu CTKM, hướng dẫn mở thẻ, hoàn thiện hồ sơ[cite: 33, 34].",
-            "Cập nhật kết quả cuộc gọi lên hệ thống[cite: 35]."
+            "Gọi điện cho khách hàng theo Data từ BIDV cung cấp.",
+            "Tư vấn giới thiệu CTKM, hướng dẫn mở thẻ, hoàn thiện hồ sơ.",
+            "Cập nhật kết quả cuộc gọi lên hệ thống."
         ],
         req: [
-            "Giọng nói chuẩn, không ngọng, kỹ năng giao tiếp tốt[cite: 44, 45].",
-            "Có trách nhiệm trong công việc[cite: 45]."
+            "Giọng nói chuẩn, không ngọng, kỹ năng giao tiếp tốt.",
+            "Có trách nhiệm trong công việc."
         ],
         ben: [
-            "Nhận 100% lương khi thử việc[cite: 39].",
-            "Hỗ trợ chi phí đào tạo 700k/khóa/7 ngày[cite: 40].",
-            "Đóng BHXH theo quy định, cơ hội thăng tiến[cite: 41, 42]."
-        ],
-        timeLoc: "Giờ hành chính 08h00 - 17h30 (T2-T7), nghỉ CN tại BIDV Tower 545 Nguyễn Văn Cừ[cite: 47, 49, 51]."
+            "Nhận 100% lương khi thử việc.",
+            "Hỗ trợ chi phí đào tạo 700k/khóa/7 ngày.",
+            "Đóng BHXH theo quy định, cơ hội thăng tiến."
+        ]
     },
     {
         id: 5,
         title: "CSKH Ngân hàng LPBank",
         bank: "LPBank",
-        // Cấu hình màu sắc (Cam vàng - Brand LPBank)
+        // Theme Cam - Nhiệt huyết (Brand LPBank)
         themeText: "text-orange-600",
         themeBg: "bg-orange-50",
         themeBtn: "bg-orange-500 hover:bg-orange-600",
         image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Full-time",
-        salary: "7.000.000đ - 9.000.000đ", // [cite: 160]
-        location: "Đống Đa, HN", // [cite: 184]
+        salary: "7.000.000đ - 9.000.000đ", 
+        location: "Đống Đa, HN", 
         desc: [
-            "Tiếp nhận cuộc gọi, giải đáp thắc mắc khách hàng LPBank nhanh chóng[cite: 156].",
-            "Tư vấn dịch vụ thẻ, TK, ngân hàng điện tử[cite: 157].",
-            "Không bán hàng, không áp doanh số[cite: 158]."
+            "Tiếp nhận cuộc gọi, giải đáp thắc mắc khách hàng LPBank nhanh chóng.",
+            "Tư vấn dịch vụ thẻ, TK, ngân hàng điện tử.",
+            "Không bán hàng, không áp doanh số."
         ],
         req: [
-            "Tốt nghiệp trung cấp trở lên, thành thạo tin học văn phòng[cite: 169, 170].",
-            "Giọng chuẩn miền Bắc, giao tiếp nhanh nhẹn, tư duy dịch vụ tốt[cite: 171]."
+            "Tốt nghiệp trung cấp trở lên, thành thạo tin học văn phòng.",
+            "Giọng chuẩn miền Bắc, giao tiếp nhanh nhẹn."
         ],
         ben: [
-            "Hỗ trợ 100k/ngày đào tạo (8 ngày)[cite: 162].",
-            "Thưởng lễ tết, sinh nhật, du lịch, teambuilding hàng năm[cite: 166, 167].",
-            "Đóng BHXH sau 2 tháng[cite: 165]."
-        ],
-        timeLoc: "Xoay ca (6 ca/tuần) tại 135 Xã Đàn, Hà Nội[cite: 174, 184]."
+            "Hỗ trợ 100k/ngày đào tạo (8 ngày).",
+            "Thưởng lễ tết, sinh nhật, du lịch, teambuilding hàng năm.",
+            "Đóng BHXH sau 2 tháng."
+        ]
     },
     {
         id: 6,
         title: "Thực tập sinh Telesales UOB",
         bank: "UOB TTS",
-        // Cấu hình màu sắc (Xám Indigo cho TTS)
+        // Theme Xám Indigo - Chuyên nghiệp cho TTS
         themeText: "text-indigo-600",
         themeBg: "bg-indigo-50",
         themeBtn: "bg-indigo-600 hover:bg-indigo-700",
         image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Thực tập",
-        salary: "Phụ cấp + Incentive", // [cite: 92, 93]
-        location: "Cầu Giấy, HN", // [cite: 78]
+        salary: "Phụ cấp + Incentive", 
+        location: "Cầu Giấy, HN", 
         desc: [
-            "Gọi điện tư vấn theo data công ty cung cấp (100-200 data/ngày)[cite: 80].",
-            "Giới thiệu sản phẩm UOB theo kịch bản có sẵn[cite: 83]."
+            "Gọi điện tư vấn theo data công ty cung cấp (100-200 data/ngày).",
+            "Giới thiệu sản phẩm UOB theo kịch bản có sẵn."
         ],
         req: [
-            "Sinh viên năm cuối hoặc chờ bằng, thực tập tối thiểu 3 tháng[cite: 87].",
-            "Định hướng theo ngành Telesales hoặc Ngân hàng[cite: 90]."
+            "Sinh viên năm cuối hoặc chờ bằng, thực tập tối thiểu 3 tháng.",
+            "Định hướng theo ngành Telesales hoặc Ngân hàng."
         ],
         ben: [
-            "Phụ cấp 2.000.000 VNĐ/tháng + Incentive (250k - 1.250k)[cite: 92, 93].",
-            "Hỗ trợ dấu mộc thực tập, đào tạo bài bản[cite: 94, 97].",
-            "Cơ hội trở thành Nhân viên chính thức[cite: 96]."
-        ],
-        timeLoc: "Full-time T2-T6 (8h30-17h30), làm 2 thứ 7/tháng tại 2A Vũ Phạm Hàm[cite: 78]."
+            "Phụ cấp 2.000.000 VNĐ/tháng + Incentive (250k - 1.250k).",
+            "Hỗ trợ dấu mộc thực tập, đào tạo bài bản.",
+            "Cơ hội trở thành Nhân viên chính thức."
+        ]
     },
     {
         id: 7,
@@ -180,26 +174,25 @@ const jobs = [
         themeBtn: "bg-purple-600 hover:bg-purple-700",
         image: "https://images.unsplash.com/photo-1521791136064-7985c2717883?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
         type: "Part-time",
-        salary: "3.000.000đ - 5.000.000đ", // [cite: 59]
-        location: "Hà Nội", // [cite: 72]
+        salary: "3.000.000đ - 5.000.000đ", 
+        location: "Hà Nội", 
         desc: [
-            "Tiếp nhận cuộc gọi đến, tư vấn dịch vụ TPBank chuyên nghiệp[cite: 55, 56].",
-            "Không yêu cầu bán hàng – Không áp doanh số[cite: 57]."
+            "Tiếp nhận cuộc gọi đến, tư vấn dịch vụ TPBank chuyên nghiệp.",
+            "Không yêu cầu bán hàng – Không áp doanh số."
         ],
         req: [
-            "Nam/Nữ 18-35 tuổi (Chấp nhận SV năm 3, 4)[cite: 65].",
-            "Không yêu cầu kinh nghiệm, giọng dễ nghe[cite: 66, 67]."
+            "Nam/Nữ 18-35 tuổi (Chấp nhận SV năm 3, 4).",
+            "Không yêu cầu kinh nghiệm, giọng dễ nghe."
         ],
         ben: [
-            "Hỗ trợ 120.000đ/ngày đào tạo (7 ngày hành chính)[cite: 61].",
-            "Cơ hội trở thành nhân viên chính thức[cite: 63]."
-        ],
-        timeLoc: "Ca tối: 17h-21h hoặc 18h-22h. Địa điểm linh hoạt (HBT/Ba Đình/Bắc Từ Liêm)[cite: 69, 71]."
+            "Hỗ trợ 120.000đ/ngày đào tạo (7 ngày hành chính).",
+            "Cơ hội trở thành nhân viên chính thức."
+        ]
     }
 ];
 
 // ==========================================
-// 2. RENDER JOBS (HIỂN THỊ RA MÀN HÌNH)
+// 2. LOGIC RENDER JOB (TẠO GIAO DIỆN)
 // ==========================================
 function renderJobs(data) {
     const container = document.getElementById('jobList');
@@ -208,7 +201,7 @@ function renderJobs(data) {
     // Xóa nội dung cũ
     container.innerHTML = '';
     
-    // Kiểm tra nếu không có job nào
+    // Kiểm tra dữ liệu
     if(data.length === 0) {
         noJob.classList.remove('hidden');
         return;
@@ -216,49 +209,49 @@ function renderJobs(data) {
         noJob.classList.add('hidden');
     }
 
-    // Duyệt qua từng job và tạo HTML
+    // Loop tạo từng card
     data.forEach((job, index) => {
         const cardHTML = `
-            <div class="bg-white rounded-2xl shadow-card hover:shadow-2xl transition-all duration-300 overflow-hidden group border border-slate-100 flex flex-col h-full"
+            <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 overflow-hidden group border border-slate-100 flex flex-col h-full transform hover:-translate-y-2"
                  data-aos="fade-up" data-aos-delay="${index * 100}">
                 
-                <div class="h-44 overflow-hidden relative">
-                    <img src="${job.image}" alt="${job.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                <div class="h-48 overflow-hidden relative cursor-pointer" onclick="openModal(${job.id})">
+                    <img src="${job.image}" alt="${job.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out">
                     
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
 
-                    <div class="absolute bottom-4 left-4">
-                        <span class="bg-white/95 backdrop-blur-sm ${job.themeText} px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider shadow-md">
+                    <div class="absolute bottom-4 left-4 z-10">
+                        <span class="bg-white/95 backdrop-blur-md ${job.themeText} px-3 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
                             ${job.bank}
                         </span>
                     </div>
                 </div>
 
-                <div class="p-6 flex flex-col flex-grow relative">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:${job.themeText} transition-colors cursor-pointer leading-snug" 
+                <div class="p-6 flex flex-col flex-grow relative bg-white">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:${job.themeText} transition-colors cursor-pointer leading-snug line-clamp-2" 
                         onclick="openModal(${job.id})">
                         ${job.title}
                     </h3>
 
                     <div class="space-y-3 mb-8">
-                        <div class="flex items-center text-sm text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                            <div class="w-8 flex justify-center"><i class="fas fa-money-bill-wave ${job.themeText}"></i></div>
-                            <span class="font-bold text-slate-800 ml-2">${job.salary}</span>
+                        <div class="flex items-center text-sm text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 group-hover:border-slate-200 transition">
+                            <div class="w-8 shrink-0 flex justify-center"><i class="fas fa-money-bill-wave ${job.themeText}"></i></div>
+                            <span class="font-bold text-slate-800 ml-1">${job.salary}</span>
                         </div>
-                        <div class="flex items-center text-sm text-slate-600 px-2">
-                            <div class="w-6 flex justify-center"><i class="fas fa-map-marker-alt text-slate-400"></i></div>
+                        <div class="flex items-center text-sm text-slate-500 px-2">
+                            <div class="w-6 shrink-0 flex justify-center"><i class="fas fa-map-marker-alt text-slate-400"></i></div>
                             <span class="ml-2 truncate">${job.location}</span>
                         </div>
-                        <div class="flex items-center text-sm text-slate-600 px-2">
-                            <div class="w-6 flex justify-center"><i class="fas fa-clock text-slate-400"></i></div>
+                        <div class="flex items-center text-sm text-slate-500 px-2">
+                            <div class="w-6 shrink-0 flex justify-center"><i class="fas fa-clock text-slate-400"></i></div>
                             <span class="ml-2">${job.type}</span>
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-4 border-t border-slate-100">
+                    <div class="mt-auto pt-5 border-t border-slate-100">
                         <button onclick="openModal(${job.id})" 
-                                class="w-full py-3 rounded-xl text-white font-bold shadow-md transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 ${job.themeBtn}">
-                            Xem chi tiết <i class="fas fa-arrow-right text-xs opacity-80"></i>
+                                class="w-full py-3.5 rounded-xl text-white font-bold shadow-md transform transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 group-active:scale-95 ${job.themeBtn}">
+                            Xem chi tiết <i class="fas fa-arrow-right text-xs opacity-80 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
                 </div>
@@ -269,16 +262,14 @@ function renderJobs(data) {
 }
 
 // ==========================================
-// 3. FILTER LOGIC (BỘ LỌC)
+// 3. LOGIC LỌC (FILTER)
 // ==========================================
 function filterJobs() {
     const bankVal = document.getElementById('filterBank').value;
     const typeVal = document.getElementById('filterType').value;
 
     const filtered = jobs.filter(job => {
-        // Logic lọc:
-        // bank.includes vì job UOB có tên là "UOB" và "UOB TTS", 
-        // nên chọn UOB sẽ ra cả 2.
+        // Kiểm tra ngân hàng (dùng includes vì "UOB" khớp với "UOB TTS")
         const matchBank = bankVal === 'all' || job.bank.includes(bankVal);
         const matchType = typeVal === 'all' || job.type === typeVal;
         return matchBank && matchType;
@@ -288,7 +279,7 @@ function filterJobs() {
 }
 
 // ==========================================
-// 4. MODAL LOGIC (POPUP CHI TIẾT)
+// 4. LOGIC MODAL (POPUP CHI TIẾT)
 // ==========================================
 const modal = document.getElementById('jobModal');
 const modalOverlay = document.getElementById('modalOverlay');
@@ -298,28 +289,27 @@ function openModal(id) {
     const job = jobs.find(j => j.id === id);
     if (!job) return;
 
-    // A. ĐIỀN DỮ LIỆU CƠ BẢN
+    // A. Fill dữ liệu Text cơ bản
     document.getElementById('modalTitle').innerText = job.title;
     document.getElementById('modalLoc').innerText = job.location;
     
-    // B. XỬ LÝ STYLE ĐỘNG CHO MODAL (Reset class cũ & thêm class mới)
+    // B. Xử lý Style động (Màu sắc theo Job)
     
     // 1. Badge Ngân hàng
     const bankLabel = document.getElementById('modalBank');
     bankLabel.innerText = job.bank;
-    // Reset toàn bộ class và gán class mới
-    bankLabel.className = `inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider mb-3 ${job.themeBg} ${job.themeText}`;
+    bankLabel.className = `inline-block px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest mb-4 shadow-sm ${job.themeBg} ${job.themeText}`;
 
-    // 2. Mức lương (Tô màu theo brand)
+    // 2. Mức lương (Tô màu)
     const salaryText = document.getElementById('modalSalary');
     salaryText.innerText = job.salary;
     salaryText.className = `font-bold text-lg ${job.themeText}`;
 
-    // C. RENDER LIST (Mô tả, Yêu cầu, Quyền lợi)
+    // C. Render các danh sách (Desc, Req, Ben)
     const renderList = (arr, elementId) => {
         const el = document.getElementById(elementId);
         if(el) {
-            el.innerHTML = arr.map(item => `<li class="mb-2 leading-relaxed">${item}</li>`).join('');
+            el.innerHTML = arr.map(item => `<li class="mb-3 leading-relaxed">${item}</li>`).join('');
         }
     };
     
@@ -327,68 +317,87 @@ function openModal(id) {
     renderList(job.req, 'modalReq');
     renderList(job.ben, 'modalBen');
 
-    // D. HIỂN THỊ MODAL VỚI ANIMATION
+    // D. Hiển thị Modal
     modal.classList.remove('hidden');
     
-    // Timeout nhỏ để trình duyệt kịp render trước khi đổi opacity (tạo hiệu ứng fade)
+    // Animation Fade-in
     setTimeout(() => {
         modalOverlay.classList.remove('opacity-0');
         modalContent.classList.remove('opacity-0', 'scale-95');
         modalContent.classList.add('scale-100');
     }, 10);
     
-    // Khóa cuộn trang chính khi mở popup
+    // Khóa cuộn background
     document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-    // Hiệu ứng đóng
+    // Animation Fade-out
     modalOverlay.classList.add('opacity-0');
     modalContent.classList.remove('scale-100');
     modalContent.classList.add('opacity-0', 'scale-95');
 
-    // Đợi 300ms cho hiệu ứng chạy xong mới ẩn div
+    // Đợi hiệu ứng xong mới ẩn
     setTimeout(() => {
         modal.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+        document.body.style.overflow = 'auto'; 
     }, 300);
 }
 
-// Đóng khi click ra vùng đen mờ
+// Đóng khi click ra ngoài
 modalOverlay.addEventListener('click', closeModal);
 
 // ==========================================
-// 5. SUBMIT FORM (MOCKUP)
+// 5. SUBMIT FORM (LIÊN KẾT GOOGLE SHEETS)
 // ==========================================
 function submitForm(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button');
-    const originalText = btn.innerHTML;
+    const originalContent = btn.innerHTML;
     
-    // Hiệu ứng Loading
+    // 1. Lấy dữ liệu form
+    const form = e.target;
+    const data = new FormData(form);
+    
+    // *QUAN TRỌNG: DÁN URL CỦA GOOGLE APP SCRIPT VÀO DƯỚI ĐÂY*
+    // Nếu chưa có, hãy tạo theo hướng dẫn ở bước trước. Nếu chỉ muốn test, để trống.
+    const scriptURL = ''; 
+
+    // 2. Hiệu ứng Loading
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Đang gửi...';
     btn.disabled = true;
-    btn.classList.add('opacity-75', 'cursor-not-allowed');
+    btn.classList.add('opacity-80', 'cursor-not-allowed');
 
-    // Giả lập gửi dữ liệu mất 1.5s
-    setTimeout(() => {
-        alert('✅ Nộp hồ sơ thành công!\nBộ phận tuyển dụng Bellsystem24 sẽ liên hệ bạn trong 24h làm việc.');
-        
-        // Reset trạng thái nút
-        btn.innerHTML = originalText;
+    // 3. Logic gửi
+    if (scriptURL) {
+        fetch(scriptURL, { method: 'POST', body: data })
+            .then(response => {
+                alert('🎉 CHÚC MỪNG!\nHồ sơ đã được lưu thành công vào hệ thống.');
+                resetForm();
+            })
+            .catch(error => {
+                alert('❌ Lỗi kết nối! Vui lòng thử lại.');
+                resetForm();
+            });
+    } else {
+        // Chế độ Demo (khi chưa có URL)
+        setTimeout(() => {
+            alert('🎉 (DEMO) Gửi thành công!\n(Để lưu thật, hãy dán link Google Script vào biến scriptURL trong file script.js)');
+            resetForm();
+        }, 1500);
+    }
+
+    function resetForm() {
+        btn.innerHTML = originalContent;
         btn.disabled = false;
-        btn.classList.remove('opacity-75', 'cursor-not-allowed');
-        
-        // Reset form
-        e.target.reset();
-        
-        // Đóng modal
+        btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        form.reset();
         closeModal();
-    }, 1500);
+    }
 }
 
 // ==========================================
-// 6. KHỞI CHẠY KHI TẢI TRANG
+// 6. KHỞI CHẠY LẦN ĐẦU
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
     renderJobs(jobs);

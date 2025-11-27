@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BELLSYSTEM24 Vietnam - Cổng thông tin tuyển dụng</title>
+    <title>Tuyển dụng BELLSYSTEM24 Vietnam - Đối tác Ngân hàng</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <script>
@@ -19,20 +16,16 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0F172A',  // Xanh đen
-                            primary: '#2563EB', // Xanh dương
-                            accent: '#F97316',  // Cam
+                            dark: '#0F172A',   // Nền tối sang trọng
+                            primary: '#2563EB', // Xanh chủ đạo
+                            accent: '#F97316',  // Cam nổi bật
                         }
                     },
                     fontFamily: {
                         sans: ['Be Vietnam Pro', 'sans-serif'],
                     },
-                    boxShadow: {
-                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-                        'glow': '0 0 20px rgba(37, 99, 235, 0.3)',
-                    },
                     animation: {
-                        'blob': 'blob 7s infinite',
+                        'blob': 'blob 10s infinite', // Hiệu ứng cục màu trôi nổi
                         'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
@@ -44,7 +37,7 @@
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
@@ -53,151 +46,132 @@
     </script>
 
     <style>
-        /* CSS Nền Aurora (Cực quang) */
         body {
             background-color: #F8FAFC;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(225,39%,30%,0) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,30%,0) 0, transparent 50%);
+            /* Tạo lưới mờ nền */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 40px 40px;
         }
         
+        /* Hiệu ứng nền Aurora (Cực quang) */
         .aurora-bg {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1), transparent 60%),
-                        radial-gradient(circle at 80% 30%, rgba(249, 115, 22, 0.08), transparent 50%);
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            animation: blob 20s infinite alternate;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blob 15s infinite alternate;
         }
 
-        /* Hiệu ứng Kính mờ (Glassmorphism) */
+        /* Glassmorphism (Hiệu ứng kính) */
         .glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
-
         .glass-nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Text Gradient */
-        .text-gradient-primary {
-            background: linear-gradient(135deg, #0F172A 0%, #2563EB 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Scrollbar tùy chỉnh */
+        /* Thanh cuộn đẹp hơn */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
 </head>
-<body class="text-slate-800 antialiased overflow-x-hidden relative">
+<body class="text-slate-800 antialiased overflow-x-hidden selection:bg-brand-primary selection:text-white">
 
-    <div class="aurora-bg"></div>
+    <div class="aurora-bg">
+        <div class="aurora-blob bg-blue-400 w-96 h-96 top-0 left-0 mix-blend-multiply"></div>
+        <div class="aurora-blob bg-purple-400 w-96 h-96 top-0 right-0 mix-blend-multiply animation-delay-2000"></div>
+        <div class="aurora-blob bg-pink-300 w-80 h-80 bottom-0 left-1/4 mix-blend-multiply animation-delay-4000"></div>
+    </div>
 
-    <nav class="glass-nav fixed w-full z-40 transition-all duration-300 top-0 h-20 flex items-center">
+    <nav class="glass-nav fixed w-full z-50 transition-all duration-300 top-0 h-20 flex items-center">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-gradient-to-tr from-blue-700 to-blue-500 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                <div class="w-11 h-11 bg-gradient-to-tr from-brand-dark to-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-105 transition-transform">
                     B
                 </div>
                 <div class="leading-none">
-                    <span class="block text-xl font-extrabold text-brand-dark tracking-tight">BELLSYSTEM24</span>
-                    <span class="block text-[10px] font-bold text-brand-accent tracking-[0.2em] mt-0.5">VIETNAM</span>
+                    <span class="block text-xl font-extrabold text-slate-900 tracking-tight">BELLSYSTEM24</span>
+                    <span class="block text-[10px] font-bold text-brand-accent tracking-[0.3em] mt-1">VIETNAM</span>
                 </div>
             </a>
             
-            <ul class="hidden md:flex items-center gap-10 font-semibold text-slate-600 text-sm">
-                <li><a href="#" class="hover:text-brand-primary transition duration-300 relative group">Trang chủ<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
-                <li><a href="#jobs" class="hover:text-brand-primary transition duration-300 relative group">Việc làm<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
-                <li><a href="#" class="hover:text-brand-primary transition duration-300 relative group">Về chúng tôi<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
+            <ul class="hidden md:flex items-center gap-8 font-bold text-slate-600 text-sm uppercase tracking-wide">
+                <li><a href="#" class="hover:text-brand-primary transition relative group">Trang chủ<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
+                <li><a href="#jobs" class="hover:text-brand-primary transition relative group">Việc làm<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
+                <li><a href="#about" class="hover:text-brand-primary transition relative group">Về chúng tôi<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all group-hover:w-full"></span></a></li>
             </ul>
 
-            <a href="#jobs" class="hidden md:flex items-center gap-2 bg-brand-dark text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl hover:bg-brand-primary transition duration-300 transform hover:-translate-y-0.5 group">
+            <a href="#jobs" class="hidden md:flex items-center gap-2 bg-brand-dark text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-xl hover:bg-brand-primary transition transform hover:-translate-y-0.5 hover:shadow-brand-primary/40">
                 <span>Ứng tuyển ngay</span>
-                <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                <i class="fas fa-paper-plane text-xs"></i>
             </a>
         </div>
     </nav>
 
-    <header class="pt-32 pb-24 lg:pt-48 lg:pb-32 relative overflow-hidden">
-        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob -z-10"></div>
-        <div class="absolute top-20 left-0 w-[500px] h-[500px] bg-orange-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000 -z-10"></div>
-
-        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+    <header class="pt-32 pb-20 lg:pt-48 lg:pb-32 relative">
+        <div class="container mx-auto px-6 text-center relative z-10">
             
-            <div data-aos="fade-down" data-aos-duration="800">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wide shadow-sm mb-8">
-                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                    Đang tuyển dụng hơn 50+ vị trí
+            <div data-aos="fade-down" data-aos-duration="1000">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 border border-white text-brand-primary text-xs font-bold uppercase tracking-wider shadow-sm mb-8 backdrop-blur-sm">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                    </span>
+                    Đối tác chiến lược của Top Ngân hàng
                 </span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-black leading-[1.1] mb-8 text-brand-dark max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
-                Chạm Đỉnh Sự Nghiệp <br>
-                <span class="text-gradient-primary">Ngân Hàng & Tài Chính</span>
+            <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 text-slate-900 drop-shadow-sm" data-aos="fade-up" data-aos-duration="1000">
+                Khởi Đầu Sự Nghiệp <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-gradient">Tài Chính & Ngân Hàng</span>
             </h1>
 
-            <p class="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
-                Gia nhập Bellsystem24 - Đối tác chiến lược của TPBank, MB, UOB, BIDV. Môi trường chuyên nghiệp, thu nhập đột phá.
+            <p class="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto font-medium" data-aos="fade-up" data-aos-delay="200">
+                Gia nhập Bellsystem24 - Làm việc trực tiếp với TPBank, MB, UOB, BIDV. <br class="hidden md:block"> Thu nhập hấp dẫn, lộ trình thăng tiến rõ ràng.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto" data-aos="fade-up" data-aos-delay="400">
-                <a href="#jobs" class="px-8 py-4 bg-brand-accent rounded-2xl text-white font-bold text-lg shadow-lg shadow-orange-200 hover:shadow-orange-400 hover:bg-orange-600 transition transform hover:-translate-y-1 text-center">
+            <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
+                <a href="#jobs" class="px-8 py-4 bg-brand-accent rounded-2xl text-white font-bold text-lg shadow-lg hover:bg-orange-600 hover:shadow-orange-500/30 transition transform hover:-translate-y-1">
                     <i class="fas fa-search mr-2"></i> Tìm việc ngay
-                </a>
-                <a href="#about" class="px-8 py-4 bg-white rounded-2xl text-brand-dark font-bold text-lg border border-slate-200 shadow-sm hover:border-brand-primary hover:text-brand-primary transition transform hover:-translate-y-1 text-center">
-                    Tìm hiểu văn hóa
                 </a>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 w-full max-w-5xl border-t border-slate-200/60 pt-10" data-aos="fade-up" data-aos-delay="600">
-                <div class="text-center">
-                    <p class="text-3xl font-black text-brand-dark mb-1">Top 1</p>
-                    <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Outsourcing VN</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-3xl font-black text-brand-dark mb-1">5000+</p>
-                    <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Nhân sự</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-3xl font-black text-brand-dark mb-1">10+</p>
-                    <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Ngân hàng đối tác</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-3xl font-black text-brand-dark mb-1">100%</p>
-                    <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Đào tạo bài bản</p>
-                </div>
+            <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto glass p-8 rounded-3xl" data-aos="fade-up" data-aos-delay="600">
+                <div><p class="text-3xl font-black text-brand-dark">Top 1</p><p class="text-xs text-slate-500 uppercase font-bold">Outsourcing VN</p></div>
+                <div><p class="text-3xl font-black text-brand-dark">5000+</p><p class="text-xs text-slate-500 uppercase font-bold">Nhân sự</p></div>
+                <div><p class="text-3xl font-black text-brand-dark">10+</p><p class="text-xs text-slate-500 uppercase font-bold">Đối tác lớn</p></div>
+                <div><p class="text-3xl font-black text-brand-dark">100%</p><p class="text-xs text-slate-500 uppercase font-bold">Được đào tạo</p></div>
             </div>
         </div>
     </header>
 
-    <section id="jobs" class="py-24 bg-white relative">
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-
-        <div class="container mx-auto px-6">
+    <section id="jobs" class="py-24 relative">
+        <div class="container mx-auto px-6 relative z-10">
             
-            <div class="flex flex-col lg:flex-row justify-between items-end mb-14 gap-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-12 gap-6">
                 <div data-aos="fade-right">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-3">Vị trí nổi bật</h2>
-                    <p class="text-slate-500 text-lg">Lựa chọn công việc phù hợp với năng lực của bạn.</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Vị trí đang tuyển</h2>
+                    <p class="text-slate-500 font-medium">Tìm kiếm cơ hội phù hợp nhất với bạn.</p>
                 </div>
                 
-                <div class="glass p-2 rounded-2xl flex flex-col md:flex-row gap-3 w-full lg:w-auto shadow-sm" data-aos="fade-left">
-                    <div class="relative group">
-                        <i class="fas fa-university absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-primary transition"></i>
-                        <select id="filterBank" onchange="filterJobs()" class="w-full md:w-56 pl-10 pr-10 py-3 rounded-xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-brand-primary outline-none font-semibold text-slate-700 cursor-pointer appearance-none transition-all hover:bg-white">
+                <div class="glass p-2 rounded-2xl flex flex-col md:flex-row gap-3 shadow-lg" data-aos="fade-left">
+                    <div class="relative">
+                        <i class="fas fa-university absolute left-4 top-3.5 text-slate-400 z-10"></i>
+                        <select id="filterBank" onchange="filterJobs()" class="w-full md:w-56 pl-10 pr-10 py-3 rounded-xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-brand-primary outline-none font-bold text-slate-700 cursor-pointer appearance-none transition-all hover:bg-white">
                             <option value="all">Tất cả Ngân hàng</option>
                             <option value="TPBank">TPBank</option>
                             <option value="MBBank">MB Bank</option>
@@ -205,18 +179,18 @@
                             <option value="BIDV">BIDV</option>
                             <option value="LPBank">LPBank</option>
                         </select>
-                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                        <i class="fas fa-chevron-down absolute right-4 top-4 text-slate-400 text-xs pointer-events-none"></i>
                     </div>
                     
-                    <div class="relative group">
-                        <i class="fas fa-clock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-primary transition"></i>
-                        <select id="filterType" onchange="filterJobs()" class="w-full md:w-56 pl-10 pr-10 py-3 rounded-xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-brand-primary outline-none font-semibold text-slate-700 cursor-pointer appearance-none transition-all hover:bg-white">
+                    <div class="relative">
+                        <i class="fas fa-clock absolute left-4 top-3.5 text-slate-400 z-10"></i>
+                        <select id="filterType" onchange="filterJobs()" class="w-full md:w-56 pl-10 pr-10 py-3 rounded-xl bg-slate-50 border-transparent focus:bg-white focus:ring-2 focus:ring-brand-primary outline-none font-bold text-slate-700 cursor-pointer appearance-none transition-all hover:bg-white">
                             <option value="all">Tất cả hình thức</option>
                             <option value="Full-time">Full-time</option>
                             <option value="Part-time">Part-time</option>
                             <option value="Thực tập">Thực tập sinh</option>
                         </select>
-                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
+                        <i class="fas fa-chevron-down absolute right-4 top-4 text-slate-400 text-xs pointer-events-none"></i>
                     </div>
                 </div>
             </div>
@@ -224,109 +198,76 @@
             <div id="jobList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
                 </div>
             
-            <div id="noJobFound" class="hidden text-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
-                    <i class="fas fa-search text-3xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-700 mb-2">Không tìm thấy kết quả</h3>
-                <p class="text-slate-500">Vui lòng thử thay đổi bộ lọc tìm kiếm.</p>
+            <div id="noJobFound" class="hidden text-center py-20 bg-white/50 rounded-3xl border-2 border-dashed border-slate-300">
+                <i class="fas fa-search text-4xl text-slate-300 mb-4"></i>
+                <p class="text-slate-500 font-bold">Không tìm thấy công việc phù hợp.</p>
             </div>
         </div>
     </section>
 
-    <footer class="bg-brand-dark text-white pt-20 pb-8 border-t border-slate-800">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-12 gap-12 mb-16">
-                <div class="md:col-span-5">
-                    <a href="#" class="flex items-center gap-2 mb-6">
-                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xl">B</div>
-                        <span class="text-2xl font-bold tracking-tight">BELLSYSTEM24</span>
-                    </a>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8 max-w-sm">
-                        Kết nối nhân tài với các định chế tài chính hàng đầu. Chúng tôi kiến tạo môi trường làm việc chuyên nghiệp, nơi bạn phát triển sự nghiệp vững chắc.
+    <footer class="bg-brand-dark text-white pt-20 pb-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-3 gap-12 mb-12 pb-12 border-b border-slate-800">
+                <div>
+                    <h3 class="text-2xl font-extrabold mb-4 flex items-center gap-2">BELLSYSTEM24</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Đơn vị cung cấp giải pháp Contact Center số 1 Việt Nam. Nơi ươm mầm tài năng trẻ cho ngành Tài chính - Ngân hàng.
                     </p>
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition text-slate-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-400 transition text-slate-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-500 transition text-slate-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 transition"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-
-                <div class="md:col-span-3">
-                    <h4 class="font-bold text-lg mb-6 text-white">Về Công Ty</h4>
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-white">Liên hệ Tuyển dụng</h4>
                     <ul class="space-y-4 text-sm text-slate-400">
-                        <li><a href="#" class="hover:text-brand-accent transition">Giới thiệu chung</a></li>
-                        <li><a href="#" class="hover:text-brand-accent transition">Văn hóa doanh nghiệp</a></li>
-                        <li><a href="#jobs" class="hover:text-brand-accent transition">Cơ hội nghề nghiệp</a></li>
-                        <li><a href="#" class="hover:text-brand-accent transition">Tin tức & Sự kiện</a></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-accent"></i> 1A Vũ Phạm Hàm, Cầu Giấy, HN</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-brand-accent"></i> 0839.882.xxx</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-envelope text-brand-accent"></i> tuyendung@bell24.vn</li>
                     </ul>
                 </div>
-
-                <div class="md:col-span-4">
-                    <h4 class="font-bold text-lg mb-6 text-white">Liên Hệ</h4>
-                    <ul class="space-y-5 text-sm text-slate-400">
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 text-brand-accent"><i class="fas fa-map-marker-alt"></i></div>
-                            <span>Tầng 3, Tòa nhà Trung Yên 1, Số 1A Vũ Phạm Hàm, Cầu Giấy, Hà Nội</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 text-brand-accent"><i class="fas fa-phone"></i></div>
-                            <span>Hotline: 0839.882.xxx</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center shrink-0 text-brand-accent"><i class="fas fa-envelope"></i></div>
-                            <span>tuyendung@bell24.vn</span>
-                        </li>
-                    </ul>
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-white">Đăng ký nhận tin</h4>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Email của bạn..." class="w-full bg-slate-800 border-none rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-brand-accent outline-none text-white placeholder-slate-500">
+                        <button class="bg-brand-accent px-4 py-3 rounded-lg hover:bg-orange-600 transition text-white"><i class="fas fa-arrow-right"></i></button>
+                    </form>
                 </div>
             </div>
-
-            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
-                <p>&copy; 2024 Bellsystem24 Vietnam. All rights reserved.</p>
-                <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition">Terms of Service</a>
-                </div>
+            <div class="text-center text-slate-500 text-xs">
+                &copy; 2024 Bellsystem24 Vietnam. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <div id="jobModal" class="fixed inset-0 z-50 hidden">
+    <div id="jobModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0" id="modalOverlay"></div>
         
         <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
-            <div class="bg-white w-full max-w-5xl h-full md:h-auto md:max-h-[90vh] rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto" id="modalContent">
+            <div class="bg-white w-full max-w-5xl h-full md:h-auto md:max-h-[90vh] rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto" id="modalContent">
                 
-                <div class="w-full md:w-2/3 p-6 md:p-8 overflow-y-auto custom-scrollbar bg-white relative">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 md:hidden w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500">
-                        <i class="fas fa-times"></i>
-                    </button>
+                <div class="w-full md:w-2/3 p-6 md:p-10 overflow-y-auto custom-scrollbar bg-white relative">
+                    <button onclick="closeModal()" class="md:hidden absolute top-4 right-4 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500"><i class="fas fa-times"></i></button>
 
-                    <div class="mb-6 mt-2 md:mt-0">
-                        <span id="modalBank" class="inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider mb-3">
-                            BANK NAME
-                        </span>
-                        <h2 id="modalTitle" class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
-                            Job Title
-                        </h2>
+                    <div class="mb-8">
+                        <span id="modalBank" class="inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider mb-3">BANK</span>
+                        <h2 id="modalTitle" class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">Job Title</h2>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl text-green-500">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-green-500 text-xl"><i class="fas fa-money-bill-wave"></i></div>
                             <div>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Thu nhập</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Thu nhập</p>
                                 <p id="modalSalary" class="font-bold text-slate-800 text-lg">---</p>
                             </div>
                         </div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl text-red-500">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-red-500 text-xl"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
-                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Địa điểm</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Địa điểm</p>
                                 <p id="modalLoc" class="font-bold text-slate-800">---</p>
                             </div>
                         </div>
@@ -334,65 +275,54 @@
 
                     <div class="space-y-8">
                         <div>
-                            <h3 class="flex items-center gap-2 font-bold text-lg text-slate-900 mb-4">
+                            <h3 class="flex items-center gap-3 font-bold text-lg text-slate-900 mb-4">
                                 <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm"><i class="fas fa-file-alt"></i></span>
                                 Mô tả công việc
                             </h3>
-                            <ul id="modalDesc" class="space-y-2 text-slate-600 list-disc pl-12 leading-relaxed"></ul>
+                            <ul id="modalDesc" class="space-y-3 text-slate-600 list-disc pl-12 leading-relaxed text-sm md:text-base"></ul>
                         </div>
                         <div>
-                            <h3 class="flex items-center gap-2 font-bold text-lg text-slate-900 mb-4">
+                            <h3 class="flex items-center gap-3 font-bold text-lg text-slate-900 mb-4">
                                 <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-sm"><i class="fas fa-user-check"></i></span>
                                 Yêu cầu ứng viên
                             </h3>
-                            <ul id="modalReq" class="space-y-2 text-slate-600 list-disc pl-12 leading-relaxed"></ul>
+                            <ul id="modalReq" class="space-y-3 text-slate-600 list-disc pl-12 leading-relaxed text-sm md:text-base"></ul>
                         </div>
                         <div>
-                            <h3 class="flex items-center gap-2 font-bold text-lg text-slate-900 mb-4">
+                            <h3 class="flex items-center gap-3 font-bold text-lg text-slate-900 mb-4">
                                 <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-sm"><i class="fas fa-gift"></i></span>
                                 Quyền lợi
                             </h3>
-                            <ul id="modalBen" class="space-y-2 text-slate-600 list-disc pl-12 leading-relaxed"></ul>
+                            <ul id="modalBen" class="space-y-3 text-slate-600 list-disc pl-12 leading-relaxed text-sm md:text-base"></ul>
                         </div>
                     </div>
                 </div>
 
                 <div class="w-full md:w-1/3 bg-slate-50 border-l border-slate-200 p-6 md:p-8 flex flex-col justify-center relative">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 hidden md:flex w-8 h-8 hover:bg-slate-200 rounded-full items-center justify-center text-slate-400 hover:text-red-500 transition">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    <button onclick="closeModal()" class="hidden md:flex absolute top-4 right-4 w-8 h-8 hover:bg-slate-200 rounded-full items-center justify-center text-slate-400 hover:text-red-500 transition"><i class="fas fa-times"></i></button>
 
                     <div class="mb-6">
-                        <h3 class="text-xl font-bold text-slate-800">Ứng tuyển ngay 🚀</h3>
-                        <p class="text-sm text-slate-500 mt-1">HR sẽ liên hệ bạn trong 24h làm việc.</p>
+                        <h3 class="text-xl font-extrabold text-slate-800">Ứng tuyển ngay 🚀</h3>
+                        <p class="text-sm text-slate-500 mt-1">Điền thông tin để HR liên hệ ngay.</p>
                     </div>
                     
                     <form onsubmit="submitForm(event)" class="space-y-4">
                         <div class="space-y-1">
-                            <label class="text-xs font-bold text-slate-500 uppercase">Họ và tên <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <i class="fas fa-user absolute left-4 top-3.5 text-slate-400 text-sm"></i>
-                                <input type="text" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-medium" placeholder="Nguyễn Văn A" required>
-                            </div>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Họ và tên <span class="text-red-500">*</span></label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Nguyễn Văn A" required>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-xs font-bold text-slate-500 uppercase">Số điện thoại <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <i class="fas fa-phone absolute left-4 top-3.5 text-slate-400 text-sm"></i>
-                                <input type="tel" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-medium" placeholder="09xxxx..." required>
-                            </div>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Số điện thoại <span class="text-red-500">*</span></label>
+                            <input type="tel" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="09xxxx..." required>
                         </div>
                         <div class="space-y-1">
-                            <label class="text-xs font-bold text-slate-500 uppercase">Link CV / Profile</label>
-                            <div class="relative">
-                                <i class="fas fa-link absolute left-4 top-3.5 text-slate-400 text-sm"></i>
-                                <input type="text" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-medium" placeholder="Google Drive / TopCV...">
-                            </div>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Link CV (Nếu có)</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition bg-white font-semibold text-slate-700 placeholder-slate-300" placeholder="Google Drive...">
                         </div>
                         
-                        <button type="submit" class="w-full py-3.5 bg-brand-primary text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:bg-blue-700 transition transform hover:-translate-y-0.5 mt-2 flex items-center justify-center gap-2">
-                            <span>GỬI HỒ SƠ</span>
-                            <i class="fas fa-paper-plane text-xs"></i>
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all mt-2 flex items-center justify-center gap-2">
+                            <span>NỘP HỒ SƠ</span>
+                            <i class="fas fa-arrow-right"></i>
                         </button>
                     </form>
                 </div>
@@ -402,15 +332,13 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Khởi tạo hiệu ứng scroll
         AOS.init({
             once: true,
             offset: 50,
             duration: 800,
-            easing: 'ease-out-cubic',
+            easing: 'ease-out-cubic'
         });
     </script>
-    
     <script src="script.js"></script>
 </body>
 </html>
