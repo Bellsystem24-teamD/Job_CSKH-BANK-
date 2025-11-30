@@ -38,7 +38,7 @@ body {
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* --- HIỆU ỨNG CHỮ TITLE (MỚI) --- */
+/* --- HIỆU ỨNG CHỮ TITLE --- */
 .animate-title-reveal {
     background: linear-gradient(to right, #06b6d4 0%, #8b5cf6 50%, #06b6d4 100%);
     background-size: 200% auto;
@@ -70,6 +70,22 @@ body {
 @keyframes gradientFlow {
     0% { background-position: 0% 50%; }
     100% { background-position: 200% 50%; }
+}
+
+/* --- INFINITE SCROLL (LOGO MARQUEE) - MỚI --- */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+    display: flex;
+    width: max-content; /* Bắt buộc để nội dung dài ra */
+    animation: scroll 40s linear infinite; /* 40s để chạy chậm mượt */
+}
+
+.animate-scroll:hover {
+    animation-play-state: paused; /* Dừng khi di chuột vào */
 }
 
 /* Glassmorphism Classes */
@@ -115,15 +131,15 @@ body {
     border-color: #d8b4fe;
 }
 
-/* Video Card Styles */
+/* Video Wrapper */
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     border-radius: 1rem;
 }
-.video-wrapper iframe {
+.video-wrapper video, .video-wrapper iframe {
     position: absolute;
     top: 0;
     left: 0;
