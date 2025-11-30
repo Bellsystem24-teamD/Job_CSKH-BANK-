@@ -130,30 +130,16 @@ const jobsData = [
     },
 ];
 
-// --- HELPER: PRINT STYLES FOR CV ---
-const injectPrintStyles = () => {
-    if (!document.getElementById('cv-print-style')) {
-        const style = document.createElement('style');
-        style.id = 'cv-print-style';
-        style.innerHTML = `
-            @media print {
-                body * { visibility: hidden; }
-                #cv-preview-container, #cv-preview-container * { visibility: visible; }
-                #cv-preview-container { 
-                    position: absolute; 
-                    left: 0; 
-                    top: 0; 
-                    width: 100%; 
-                    margin: 0; 
-                    padding: 0; 
-                    box-shadow: none;
-                    border: none;
-                }
-                @page { margin: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+// --- HELPER: LIBS LOADER (HTML2PDF) ---
+const loadHtml2Pdf = () => {
+    return new Promise((resolve, reject) => {
+        if (typeof html2pdf !== 'undefined') return resolve();
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
 };
 
 // --- VIEWS: GIAO DIỆN (TEMPLATES) ---
@@ -176,12 +162,11 @@ const HomeView = () => `
                 Gia nhập BELLSYSTEM24 - Đối tác chiến lược của MB, UOB, TPBank, BIDV. Môi trường làm việc chuẩn Gen Z, thu nhập hấp dẫn và lộ trình thăng tiến rõ ràng.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
-                <button onclick="router.navigate('jobs')" class="btn-primary py-4 px-8 rounded-full text-lg font-bold shadow-lg shadow-purple-200 flex items-center justify-center gap-2 min-w-[200px]">
+                <button onclick="window.router.navigate('jobs')" class="btn-primary py-4 px-8 rounded-full text-lg font-bold shadow-lg shadow-purple-200 flex items-center justify-center gap-2 min-w-[200px]">
                     Xem Việc Làm Ngay <i class="fa-solid fa-arrow-right"></i>
                 </button>
                 
-                <!-- NÚT TẠO CV ONLINE -->
-                <button onclick="router.navigate('cv-builder')" class="py-4 px-8 rounded-full bg-white text-purple-600 font-bold border border-purple-200 hover:bg-purple-50 transition shadow-sm flex items-center justify-center gap-2 min-w-[200px]">
+                <button onclick="window.router.navigate('cv-builder')" class="py-4 px-8 rounded-full bg-white text-purple-600 font-bold border border-purple-200 hover:bg-purple-50 transition shadow-sm flex items-center justify-center gap-2 min-w-[200px]">
                     <i class="fa-solid fa-file-pen"></i> Tạo CV Online
                 </button>
 
@@ -192,14 +177,13 @@ const HomeView = () => `
         </div>
     </section>
 
-    <!-- Partners Marquee (Dải Logo Chạy Động) - NỔI BẬT KHU VỰC TRỐNG -->
+    <!-- Partners Marquee -->
     <section class="py-16 overflow-hidden relative border-y border-slate-200/50 bg-white/40 backdrop-blur-sm">
         <p class="text-center text-slate-400 text-xs font-bold uppercase tracking-[0.3em] mb-10 animate-fade-up">
             Được tin tưởng bởi các định chế tài chính hàng đầu
         </p>
         
         <div class="relative w-full max-w-full overflow-hidden">
-            <!-- Hiệu ứng mờ 2 bên -->
             <div class="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#f0f9ff] to-transparent z-10 pointer-events-none"></div>
             <div class="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#f0f9ff] to-transparent z-10 pointer-events-none"></div>
 
@@ -242,7 +226,7 @@ const HomeView = () => `
                 <div class="flex gap-16 mx-10 items-center">
                     <div class="flex items-center gap-3 transition duration-300 hover:scale-110 cursor-pointer">
                         <div class="w-20 h-20 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg shadow-blue-100 border border-slate-100">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/UOB_Logo.svg/2560px-UOB_Logo.svg.png" class="w-full h-full object-contain" alt="UOB">
+                            <img src="logo_uob.jpg" class="w-full h-full object-contain" alt="UOB">
                         </div>
                         <span class="text-xl font-display font-bold text-slate-800">UOB Bank</span>
                     </div>
@@ -254,7 +238,7 @@ const HomeView = () => `
                     </div>
                     <div class="flex items-center gap-3 transition duration-300 hover:scale-110 cursor-pointer">
                         <div class="w-20 h-20 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg shadow-purple-100 border border-slate-100">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Logo-TPBank-Moi-Nhat-Purple-RGB.png/1200px-Logo-TPBank-Moi-Nhat-Purple-RGB.png" class="w-full h-full object-contain" alt="TPBank">
+                            <img src="logo_tpbank.jpg" class="w-full h-full object-contain" alt="TPBank">
                         </div>
                         <span class="text-xl font-display font-bold text-slate-800">TPBank</span>
                     </div>
@@ -266,7 +250,7 @@ const HomeView = () => `
                     </div>
                     <div class="flex items-center gap-3 transition duration-300 hover:scale-110 cursor-pointer">
                         <div class="w-20 h-20 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg shadow-orange-100 border border-slate-100">
-                            <img src="https://vetc.com.vn/assets/images/logo.png" class="w-full h-full object-contain" alt="VETC">
+                            <img src="logo_vetc.png" class="w-full h-full object-contain" alt="VETC">
                         </div>
                         <span class="text-xl font-display font-bold text-slate-800">VETC</span>
                     </div>
@@ -378,15 +362,13 @@ const JobsView = () => `
                     <option value="VIB">VIB</option>
                 </select>
             </div>
-            <button onclick="handleSearch()" class="btn-primary rounded-xl px-8 py-3 font-bold md:w-auto w-full">
+            <button onclick="window.handleSearch()" class="btn-primary rounded-xl px-8 py-3 font-bold md:w-auto w-full">
                 Tìm Ngay
             </button>
         </div>
 
         <!-- Job Grid -->
-        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
-            <!-- Cards will be injected here -->
-        </div>
+        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-2"></div>
 
         <!-- No Results -->
         <div id="noResults" class="hidden text-center py-20">
@@ -398,16 +380,15 @@ const JobsView = () => `
     </section>
 `;
 
-// 3. JOB DETAIL VIEW (Đã sửa để dùng thẻ VIDEO cho MP4)
+// 3. JOB DETAIL VIEW
 const JobDetailView = (job) => `
     <section class="max-w-5xl mx-auto px-4 py-8 min-h-screen animate-fade-up">
         <!-- Back Button -->
-        <button onclick="router.navigate('jobs')" class="mb-8 flex items-center gap-2 text-slate-500 hover:text-purple-600 transition font-medium group bg-white px-4 py-2 rounded-lg shadow-sm">
+        <button onclick="window.router.navigate('jobs')" class="mb-8 flex items-center gap-2 text-slate-500 hover:text-purple-600 transition font-medium group bg-white px-4 py-2 rounded-lg shadow-sm">
             <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition"></i> Quay lại danh sách
         </button>
         
         <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-purple-100/50 overflow-hidden border border-slate-100 relative">
-            
             <!-- Header -->
             <div class="bg-gradient-to-br from-slate-900 to-slate-800 p-8 md:p-12 text-white relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-96 h-96 bg-purple-500 rounded-full blur-[120px] opacity-20 translate-x-1/3 -translate-y-1/3"></div>
@@ -420,9 +401,7 @@ const JobDetailView = (job) => `
                             ${job.type}
                         </span>
                     </div>
-                    
                     <h1 class="text-3xl md:text-5xl font-display font-bold mb-6 leading-tight">${job.title}</h1>
-                    
                     <div class="flex flex-col md:flex-row gap-8 mt-8 pt-8 border-t border-white/10">
                         <div>
                             <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Mức lương</p>
@@ -439,7 +418,6 @@ const JobDetailView = (job) => `
             <div class="flex flex-col lg:flex-row">
                 <!-- Main Content -->
                 <div class="p-8 md:p-12 flex-1 space-y-10">
-                    <!-- Section Mô tả -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 mb-4">
                             <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-file-lines"></i></span>
@@ -449,8 +427,6 @@ const JobDetailView = (job) => `
                             ${job.desc}
                         </p>
                     </div>
-
-                    <!-- Section Thời gian & Địa điểm -->
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2 mb-3">
@@ -465,8 +441,6 @@ const JobDetailView = (job) => `
                             <p class="text-slate-600 text-sm leading-relaxed">${job.address}</p>
                         </div>
                     </div>
-
-                    <!-- Section Yêu cầu -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 mb-4">
                             <span class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center"><i class="fa-solid fa-user-check"></i></span>
@@ -476,8 +450,6 @@ const JobDetailView = (job) => `
                             ${job.req}
                         </div>
                     </div>
-
-                    <!-- Section Quyền lợi -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 mb-4">
                             <span class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center"><i class="fa-solid fa-gift"></i></span>
@@ -487,15 +459,12 @@ const JobDetailView = (job) => `
                             ${job.benefit}
                         </div>
                     </div>
-
-                    <!-- NEW: Section Video MP4 Local -->
                     <div>
                          <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 mb-4">
                             <span class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i class="fa-solid fa-video"></i></span>
                             Góc nhìn công việc (Video)
                         </h3>
                         <div class="video-wrapper bg-slate-100 rounded-2xl overflow-hidden shadow-inner border border-slate-100 relative" style="padding-bottom: 56.25%; height: 0;">
-                            <!-- Sử dụng thẻ VIDEO cho file MP4 -->
                             <video controls autoplay loop class="absolute top-0 left-0 w-full h-full object-cover">
                                 <source src="${job.videoId}" type="video/mp4">
                                 Trình duyệt của bạn không hỗ trợ thẻ video.
@@ -503,23 +472,19 @@ const JobDetailView = (job) => `
                         </div>
                         <p class="text-sm text-slate-400 mt-2 italic text-center">Video giới thiệu môi trường làm việc thực tế.</p>
                     </div>
-
                 </div>
 
                 <!-- Sidebar CTA -->
                 <div class="lg:w-80 bg-slate-50 p-8 border-l border-slate-100 flex flex-col items-center">
                     <div class="sticky top-24 w-full">
                         <p class="text-slate-500 text-sm mb-6 text-center">Bạn đã sẵn sàng gia nhập?</p>
-                        
                         <a href="https://www.facebook.com/profile.php?id=61584435535860" target="_blank" 
                            class="group block w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg text-center shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-[1.02] transition duration-300 animate-pulse-glow">
                             ỨNG TUYỂN NGAY <i class="fa-solid fa-paper-plane ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        
                         <p class="text-xs text-center text-slate-400 mt-4">
                             Click để chat trực tiếp với bộ phận Tuyển dụng qua Facebook.
                         </p>
-
                         <div class="mt-8 pt-8 border-t border-slate-200 w-full">
                             <h4 class="font-bold text-slate-700 mb-4">Lưu ý khi ứng tuyển:</h4>
                             <ul class="text-sm text-slate-500 space-y-2 list-disc pl-4">
@@ -535,9 +500,10 @@ const JobDetailView = (job) => `
     </section>
 `;
 
-// 4. CV BUILDER VIEW (NEW - TOPCV STYLE)
+// 4. CV BUILDER VIEW (FIXED: VISIBLE OVERLAY & EDUCATION)
 const CVBuilderView = () => {
-    injectPrintStyles(); // Inject CSS for printing
+    loadHtml2Pdf();
+    
     return `
     <section class="max-w-7xl mx-auto px-4 py-8 min-h-screen flex flex-col lg:flex-row gap-8 bg-slate-50 animate-fade-up">
         <!-- LEFT: EDITOR FORM -->
@@ -546,6 +512,12 @@ const CVBuilderView = () => {
                 <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-pen-to-square text-purple-600"></i> Nhập thông tin</h2>
                 
                 <div class="space-y-4">
+                    <!-- Avatar Upload -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase">Ảnh đại diện</label>
+                        <input type="file" accept="image/*" onchange="window.handleAvatar(this)" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"/>
+                    </div>
+
                     <!-- Personal Info -->
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-500 uppercase">Họ và tên</label>
@@ -567,7 +539,7 @@ const CVBuilderView = () => {
                         </div>
                     </div>
 
-                    <!-- Dynamic Sections (Simplified for Demo) -->
+                    <!-- Dynamic Sections -->
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-500 uppercase">Mục tiêu nghề nghiệp</label>
                         <textarea oninput="window.updateCV('cv-objective', this.value)" rows="3" placeholder="Mong muốn làm việc trong môi trường chuyên nghiệp..." class="w-full p-3 rounded-lg border border-slate-200 focus:border-purple-500 focus:outline-none text-sm"></textarea>
@@ -578,6 +550,12 @@ const CVBuilderView = () => {
                         <textarea oninput="window.updateCV('cv-exp', this.value)" rows="4" placeholder="- 2022-2024: Nhân viên CSKH tại Cty ABC..." class="w-full p-3 rounded-lg border border-slate-200 focus:border-purple-500 focus:outline-none text-sm"></textarea>
                     </div>
 
+                    <!-- NEW: EDUCATION INPUT -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-bold text-slate-500 uppercase">Học vấn</label>
+                        <textarea oninput="window.updateCV('cv-education', this.value)" rows="3" placeholder="- Đại học Thương Mại&#10;  Chuyên ngành: QTKD (2018-2022)&#10;- Tốt nghiệp loại Giỏi" class="w-full p-3 rounded-lg border border-slate-200 focus:border-purple-500 focus:outline-none text-sm"></textarea>
+                    </div>
+
                     <div class="space-y-2">
                         <label class="text-xs font-bold text-slate-500 uppercase">Kỹ năng</label>
                         <textarea oninput="window.updateCV('cv-skills', this.value)" rows="3" placeholder="- Giao tiếp tốt&#10;- Tin học văn phòng" class="w-full p-3 rounded-lg border border-slate-200 focus:border-purple-500 focus:outline-none text-sm"></textarea>
@@ -586,8 +564,8 @@ const CVBuilderView = () => {
 
                 <!-- Action Buttons -->
                 <div class="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-3">
-                    <button onclick="window.print()" class="w-full py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-download"></i> Tải PDF / In CV
+                    <button onclick="window.downloadPDF()" class="w-full py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-download"></i> Tải PDF về máy
                     </button>
                     <button onclick="window.router.navigate('home')" class="w-full py-3 bg-slate-100 text-slate-600 rounded-xl font-bold hover:bg-slate-200 transition">
                         Quay lại trang chủ
@@ -599,21 +577,29 @@ const CVBuilderView = () => {
         <!-- RIGHT: CV PREVIEW (A4 Paper Style) -->
         <div class="lg:w-2/3 overflow-auto flex justify-center bg-slate-200/50 p-4 rounded-2xl border border-slate-200">
             <div id="cv-preview-container" class="bg-white w-[210mm] min-h-[297mm] shadow-2xl p-10 flex flex-col relative text-slate-800">
-                <!-- Header -->
-                <div class="flex items-start justify-between border-b-2 border-purple-600 pb-8 mb-8">
-                    <div>
-                        <h1 id="cv-name" class="text-4xl font-black text-slate-900 uppercase tracking-tight mb-2">NGUYỄN VĂN A</h1>
-                        <p id="cv-title" class="text-xl font-medium text-purple-600 uppercase tracking-wider">NHÂN VIÊN CSKH</p>
+                <!-- Header with Avatar -->
+                <div class="flex items-start gap-6 border-b-2 border-purple-600 pb-8 mb-8">
+                    <!-- Avatar Area -->
+                    <div class="flex-shrink-0">
+                        <img id="cv-avatar-preview" src="https://via.placeholder.com/150?text=Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-purple-100 shadow-sm" alt="Avatar">
                     </div>
-                    <div class="text-right text-sm space-y-1 text-slate-500">
-                        <p id="cv-email" class="flex items-center justify-end gap-2"><i class="fa-solid fa-envelope text-purple-500"></i> email@gmail.com</p>
-                        <p id="cv-phone" class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone text-purple-500"></i> 0912 345 678</p>
+                    
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h1 id="cv-name" class="text-4xl font-black text-slate-900 uppercase tracking-tight mb-2">NGUYỄN VĂN A</h1>
+                                <p id="cv-title" class="text-xl font-medium text-purple-600 uppercase tracking-wider">NHÂN VIÊN CSKH</p>
+                            </div>
+                            <div class="text-right text-sm space-y-1 text-slate-500">
+                                <p id="cv-email" class="flex items-center justify-end gap-2"><i class="fa-solid fa-envelope text-purple-500"></i> email@gmail.com</p>
+                                <p id="cv-phone" class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone text-purple-500"></i> 0912 345 678</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Content Grid -->
                 <div class="grid grid-cols-3 gap-8 flex-grow">
-                    
                     <!-- Left Sidebar of CV -->
                     <div class="col-span-1 space-y-8 border-r border-slate-100 pr-4">
                         <div>
@@ -623,10 +609,6 @@ const CVBuilderView = () => {
                         <div>
                             <h3 class="text-sm font-bold uppercase text-slate-900 border-b-2 border-slate-200 pb-1 mb-3">Kỹ năng</h3>
                             <p id="cv-skills" class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">- Giao tiếp tốt<br>- Tin học văn phòng</p>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-bold uppercase text-slate-900 border-b-2 border-slate-200 pb-1 mb-3">Thông tin thêm</h3>
-                            <p class="text-sm text-slate-600 leading-relaxed">Ngày sinh: 01/01/2000<br>Giới tính: Nam</p>
                         </div>
                     </div>
 
@@ -643,22 +625,23 @@ const CVBuilderView = () => {
                             </div>
                         </div>
 
+                        <!-- NEW: DYNAMIC EDUCATION SECTION -->
                         <div>
                             <h3 class="text-lg font-bold uppercase text-purple-700 border-b-2 border-purple-100 pb-2 mb-4 flex items-center gap-2">
                                 <i class="fa-solid fa-graduation-cap"></i> Học vấn
                             </h3>
-                            <div class="text-sm text-slate-700 leading-relaxed">
-                                <p class="font-bold">Đại học Thương Mại</p>
-                                <p class="italic text-slate-500">Chuyên ngành: Quản trị kinh doanh (2018 - 2022)</p>
-                                <p>- Tốt nghiệp loại Giỏi.</p>
+                            <div id="cv-education" class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                                - Đại học Thương Mại
+                                  Chuyên ngành: QTKD (2018-2022)
+                                - Tốt nghiệp loại Giỏi.
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Footer Decor -->
-                <div class="mt-auto pt-8 text-center text-xs text-slate-300 font-medium">
-                    CV created via Bellsystem24 Career Site
+                <div class="mt-auto pt-8 text-center text-xs text-slate-400 font-medium border-t border-slate-100">
+                    CV created via Bellsystem24
                 </div>
             </div>
         </div>
@@ -666,12 +649,93 @@ const CVBuilderView = () => {
     `;
 };
 
-// Function Update CV Realtime (Exposed Global)
+// --- GLOBAL FUNCTIONS ---
+
+// Improved updateCV to handle newlines correctly
 window.updateCV = (id, value) => {
     const element = document.getElementById(id);
     if(element) {
-        // Xử lý xuống dòng cho textarea
-        element.innerText = value || element.getAttribute('placeholder') || '';
+        // Replace \n with <br> for HTML rendering
+        const formattedText = value ? value.replace(/\n/g, '<br>') : (element.getAttribute('placeholder') ? element.getAttribute('placeholder').replace(/\n/g, '<br>') : '');
+        element.innerHTML = formattedText;
+    }
+};
+
+window.handleAvatar = (input) => {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('cv-avatar-preview').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+};
+
+// FIX: FORCE RENDER BY OVERLAYING ON TOP
+window.downloadPDF = async () => {
+    const element = document.getElementById('cv-preview-container');
+    if (!element) {
+        alert('Không tìm thấy bản xem trước CV!');
+        return;
+    }
+
+    await loadHtml2Pdf();
+
+    const clone = element.cloneNode(true);
+
+    // Force style to be visible on top of everything
+    // This ensures the browser paints it, preventing the white page issue
+    clone.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 794px !important; /* Precise A4 width */
+        min-height: 1123px !important;
+        background: #ffffff !important;
+        color: #1e293b !important;
+        z-index: 99999 !important; /* On top of everything */
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin: 0 !important;
+        padding: 40px !important;
+        transform: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    `;
+
+    // Ensure text is black for PDF
+    const allText = clone.querySelectorAll('*');
+    allText.forEach(el => {
+        if (window.getComputedStyle(el).color === 'rgb(255, 255, 255)') {
+             el.style.color = '#000000';
+        }
+    });
+
+    document.body.appendChild(clone);
+
+    const opt = {
+        margin: 0,
+        filename: 'My_CV.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true, 
+            scrollY: 0, 
+            logging: true,
+            backgroundColor: '#ffffff'
+        },
+        jsPDF: { unit: 'px', format: 'a4', orientation: 'portrait' }
+    };
+
+    try {
+        // Wait a split second for rendering
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await html2pdf().set(opt).from(clone).save();
+    } catch (err) {
+        console.error(err);
+        alert('Lỗi khi tải PDF, vui lòng thử lại.');
+    } finally {
+        document.body.removeChild(clone);
     }
 };
 
@@ -682,7 +746,6 @@ const createJobCard = (job) => {
     
     return `
         <div class="job-card bg-white rounded-[1.5rem] p-6 cursor-pointer group flex flex-col h-full relative overflow-hidden border border-slate-100 shadow-sm" onclick="window.router.navigate('detail', '${job.id}')">
-            <!-- Hover Effect -->
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             
             <div class="flex justify-between items-start mb-5">
@@ -711,7 +774,6 @@ const createJobCard = (job) => {
     `;
 }
 
-// Expose handleSearch to window to be accessible from HTML
 window.handleSearch = () => {
     const keyword = document.getElementById('searchInput').value.toLowerCase();
     const bank = document.getElementById('bankFilter').value;
@@ -734,7 +796,6 @@ window.handleSearch = () => {
         noRes.classList.add('hidden');
         grid.innerHTML = filtered.map(createJobCard).join('');
         
-        // Animation Stagger
         document.querySelectorAll('.job-card').forEach((card, index) => {
             card.style.opacity = '0';
             card.style.animation = `fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards ${index * 0.05}s`;
@@ -767,16 +828,14 @@ const router = {
             if (job) {
                 app.innerHTML = JobDetailView(job);
             }
-        } else if (page === 'cv-builder') { // New Route for CV Builder
+        } else if (page === 'cv-builder') {
             app.innerHTML = CVBuilderView();
         }
     }
 };
 
-// Expose router to window
 window.router = router;
 
-// Init App
 document.addEventListener('DOMContentLoaded', () => {
     router.navigate('home');
 });
